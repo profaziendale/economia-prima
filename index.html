@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Dashboard Economia 1AE</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2FF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(8deg)}}
+@keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(14deg)}75%{transform:rotate(-8deg)}}
+.rise{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.floaty{animation:floaty 5s ease-in-out infinite}
+.card{transition:transform .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 18px 40px rgba(27,22,64,.16)}
+.card:focus-visible{outline:4px solid #2453E0;outline-offset:3px}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 32px 16px 64px; position: relative; overflow: hidden">
+  <div aria-hidden="true" class="floaty" style="position: absolute; top: 40px; right: 6%; width: 120px; height: 120px; border-radius: 32px; background: #FFC93C; opacity: .55"></div>
+  <div aria-hidden="true" class="floaty" style="position: absolute; top: 260px; left: -30px; width: 90px; height: 90px; border-radius: 50%; background: #FF4F8B; opacity: .35; animation-delay: -2s"></div>
+  <div aria-hidden="true" class="floaty" style="position: absolute; top: 120px; right: 28%; width: 46px; height: 46px; border-radius: 12px; background: #7B5CFF; opacity: .45; animation-delay: -1s"></div>
+
+  <div style="max-width: 1180px; margin: 0 auto; position: relative; display: flex; flex-direction: column; gap: 40px">
+
+    <header class="rise" style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between">
+      <div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 520px">
+        <span style="align-self: flex-start; background: #1B1640; color: #FFFFFF; font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px">Classe 1AE · Economia aziendale</span>
+        <h1 style="margin: 0; font-size: clamp(36px, 6vw, 64px); line-height: 1.02; font-weight: 900; letter-spacing: -.02em">Ciao! Scegli da dove <span style="background: #FFC93C; padding: 0 10px; border-radius: 12px">partire</span>.</h1>
+        <p style="margin: 0; font-size: 18px; line-height: 1.5; color: #4B4670; max-width: 640px">Ogni lezione è fatta di schermate animate: vai avanti con il tasto <strong style="color: #1B1640">Avanti</strong>, prova i calcolatori e poi mettiti alla prova nella Palestra.</p>
+      </div>
+      <a href="Allenamento.dc.html" class="card" style="text-decoration: none; display: flex; align-items: center; gap: 14px; background: #1B1640; color: #FFFFFF; padding: 18px 24px; border-radius: 20px; min-height: 44px; flex: 0 0 auto">
+        <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFC93C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v16M18 4v16M3 8v8M21 8v8M6 12h12"></path></svg>
+        <span style="display: flex; flex-direction: column"><span style="font-weight: 800; font-size: 20px">Palestra</span><span style="font-size: 14px; color: #D9D5F5">{{totalEx}} esercizi con correzione</span></span>
+      </a>
+    </header>
+
+    <section style="display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span style="width: 14px; height: 14px; border-radius: 4px; background: #2453E0"></span>
+        <h2 style="margin: 0; font-size: 26px; font-weight: 800">Modulo A · Gli strumenti di calcolo</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px">
+        <sc-for list="{{math}}" as="c" hint-placeholder-count="5">
+          <a href="{{c.href}}" class="card rise" style="{{c.cardStyle}}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start">
+              <span style="{{c.iconBox}}">
+                <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1B1640" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-d="{{c.icon}}"></path></svg>
+              </span>
+              <span style="font-weight: 900; font-size: 40px; line-height: 1; color: rgba(27,22,64,.18)">{{c.num}}</span>
+            </div>
+            <span style="font-weight: 800; font-size: 21px; line-height: 1.2; color: #1B1640">{{c.title}}</span>
+            <span style="font-size: 15px; line-height: 1.45; color: #4B4670">{{c.text}}</span>
+            <span style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: #1B1640">
+              <span>{{c.steps}} schermate</span>
+              <span style="background: #1B1640; color: #FFFFFF; border-radius: 999px; padding: 8px 14px">Apri →</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span style="width: 14px; height: 14px; border-radius: 4px; background: #FF7A1A"></span>
+        <h2 style="margin: 0; font-size: 26px; font-weight: 800">Modulo B · L'azienda</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px">
+        <sc-for list="{{az}}" as="c" hint-placeholder-count="4">
+          <a href="{{c.href}}" class="card rise" style="{{c.cardStyle}}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start">
+              <span style="{{c.iconBox}}">
+                <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1B1640" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path data-dc-d="{{c.icon}}"></path></svg>
+              </span>
+              <span style="font-weight: 900; font-size: 40px; line-height: 1; color: rgba(27,22,64,.18)">{{c.num}}</span>
+            </div>
+            <span style="font-weight: 800; font-size: 21px; line-height: 1.2; color: #1B1640">{{c.title}}</span>
+            <span style="font-size: 15px; line-height: 1.45; color: #4B4670">{{c.text}}</span>
+            <span style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: #1B1640">
+              <span>{{c.steps}} schermate</span>
+              <span style="background: #1B1640; color: #FFFFFF; border-radius: 999px; padding: 8px 14px">Apri →</span>
+            </span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section class="rise" style="background: #FFFFFF; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 6px 0 #E2DDFB">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px">
+        <h2 style="margin: 0; font-size: 24px; font-weight: 800">Formule da tenere in tasca</h2>
+        <span style="font-size: 14px; color: #4B4670; font-weight: 600">Tocca una lezione per vederle animate</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px">
+        <div style="background: #FFF4CF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #6B5300">Pesi</span>
+          <span style="font-size: 18px; font-weight: 800">Lordo = Netto + Tara</span>
+          <span style="font-size: 14px; color: #4B4670">Netto = Lordo − Tara · Tara = Lordo − Netto</span>
+        </div>
+        <div style="background: #DDF7EA; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #0B6B41">Valori</span>
+          <span style="font-size: 18px; font-weight: 800">Ricavo − Costo = Utile</span>
+          <span style="font-size: 14px; color: #4B4670">Se il costo supera il ricavo: Costo − Ricavo = Perdita</span>
+        </div>
+        <div style="background: #E3EAFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #2453E0">Misure</span>
+          <span style="font-size: 18px; font-weight: 800">1 t = 10 q = 1.000 kg</span>
+          <span style="font-size: 14px; color: #4B4670">1 q = 100 kg · kg → q: dividi per 100</span>
+        </div>
+        <div style="background: #FFE0EB; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #A3164B">Percentuale</span>
+          <span style="font-size: 18px; font-weight: 800">100 : r = S : P</span>
+          <span style="font-size: 14px; color: #4B4670">Sopra: 100 : (100+r) = S : (S+P)</span>
+        </div>
+        <div style="background: #ECE6FF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #5B3FD9">Riparto</span>
+          <span style="font-size: 18px; font-weight: 800">coeff. = S : (a+b+c)</span>
+          <span style="font-size: 14px; color: #4B4670">Quota = coefficiente × grandezza</span>
+        </div>
+        <div style="background: #FFF0CC; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #8A5A00">Costi e prezzi</span>
+          <span style="font-size: 18px; font-weight: 800">Costo di 1 kg = costo complessivo ÷ kg</span>
+          <span style="font-size: 14px; color: #4B4670">Utile % sul costo: 100 : (100+u) = costo : prezzo</span>
+        </div>
+        <div style="background: #D9F6F2; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #0B6B62">Chi vale 100?</span>
+          <span style="font-size: 18px; font-weight: 800">Il … % di che cosa?</span>
+          <span style="font-size: 14px; color: #4B4670">Quella grandezza vale 100, l'altra 100 ± r</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const card = (bg, i) => ({
+      cardStyle: 'text-decoration: none; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-radius: 24px; padding: 22px; min-height: 230px; box-sizing: border-box; border: 3px solid ' + bg + '; box-shadow: 0 6px 0 ' + bg + '; animation-delay: ' + (i * 0.07) + 's',
+      iconBox: 'display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 18px; background: ' + bg
+    });
+    const math = [
+      { href: 'Misure.dc.html', num: '01', title: 'Misure, pesi e valori', text: 'kg, quintali e tonnellate · peso lordo, netto e tara · ricavo, costo e utile.', steps: 5, bg: '#FFC93C', icon: 'M12 3v18M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0zM8 21h8' },
+      { href: 'Proporzioni.dc.html', num: '02', title: 'Rapporti e proporzioni', text: 'Medi ed estremi, la proprietà fondamentale, grandezze dirette e inverse.', steps: 6, bg: '#8FB0FF', icon: 'M4 7h16M4 17h16M9 3l-2 18M17 3l-2 18' },
+      { href: 'Percentuali.dc.html', num: '03', title: 'Calcolo percentuale', text: '100 : r = S : P · calcoli diretti e inversi con il calcolatore animato.', steps: 6, bg: '#FF8FB4', icon: 'M19 5L5 19M7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' },
+      { href: 'SopraSotto.dc.html', num: '04', title: 'Sopracento e sottocento', text: 'Aumenti, sconti, cali di peso e la trappola della tara sul lordo o sul netto.', steps: 6, bg: '#B9A6FF', icon: 'M12 19V5M5 12l7-7 7 7' },
+      { href: 'PesiValori.dc.html', num: '05', title: 'Sopra e sottocento con pesi e valori', text: 'Tara % sul lordo o sul netto, utile % sul costo o sul ricavo: come impostare la proporzione.', steps: 5, bg: '#4FD1C5', icon: 'M4 20h16M7 20V10M12 20V6M17 20v-7' },
+      { href: 'Riparti.dc.html', num: '06', title: 'Riparti proporzionali', text: 'Dividere una somma in parti giuste: riparto semplice e riparto composto.', steps: 6, bg: '#6FDCA6', icon: 'M12 3v9l7 4M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z' },
+      { href: 'Costi.dc.html', num: '07', title: 'Costo complessivo, unitario e prezzo', text: 'Costo d’acquisto, spese, costo di 1 kg e prezzo di vendita, con un problema guidato.', steps: 7, bg: '#FFB547', icon: 'M20 12l-8 8-9-9V3h8zM7.5 7.5h.01' }
+    ];
+    const az = [
+      { href: 'Azienda.dc.html', num: '08', title: 'Bisogni e azienda', text: 'Cos’è un bisogno, come si soddisfa, aziende di consumo e di produzione, elementi costitutivi.', steps: 6, bg: '#FFB27A', icon: 'M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6' },
+      { href: 'Sostenibile.dc.html', num: '09', title: 'Ambiente e impresa sostenibile', text: 'Sviluppo sostenibile, economia circolare, le 3R e le relazioni con l’ambiente.', steps: 5, bg: '#6FDCA6', icon: 'M5 19c0-8 6-14 15-14 0 9-6 15-14 15M5 19l7-7' },
+      { href: 'Organizzazione.dc.html', num: '10', title: 'Persone e organizzazione', text: 'Imprenditore e lavoratori, localizzazione, funzioni aziendali e organigramma.', steps: 5, bg: '#8FB0FF', icon: 'M12 3v5M6 13v-2h12v2M12 8a0 0 0 0 0 0 0M4 13h4v4H4zM10 13h4v4h-4zM16 13h4v4h-4zM10 3h4v5h-4z' },
+      { href: 'Gestione.dc.html', num: '11', title: 'Operazioni di gestione', text: 'Finanziamento, investimento, produzione e vendita: il ciclo che fa vivere l’azienda.', steps: 6, bg: '#B9A6FF', icon: 'M20 12a8 8 0 1 1-3-6.2M20 4v5h-5' }
+    ];
+    return {
+      totalEx: 42,
+      math: math.map((c, i) => Object.assign({}, c, card(c.bg, i))),
+      az: az.map((c, i) => Object.assign({}, c, card(c.bg, i)))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Sopra e sottocento con pesi e valori</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EAFBF8;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes drop{0%{opacity:0;transform:translateY(-36px)}70%{transform:translateY(4px)}100%{opacity:1;transform:none}}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-6px)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.drop{animation:drop .6s cubic-bezier(.2,.8,.2,1) both}
+.wob{animation:wob 3.4s ease-in-out infinite}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.inp{font-family:inherit;font-size:20px;font-weight:800;padding:10px 12px;border:3px solid #BDEDE6;border-radius:14px;width:100%;box-sizing:border-box;color:#1B1640;background:#FFFFFF;min-height:48px}
+.inp:focus{outline:none;border-color:#1B1640}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1),flex-grow .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #4FD1C5; border-radius: 10px; padding: 4px 10px">05</span>Sopra e sottocento con pesi e valori</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #C9F0EA; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="5">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #C9F0EA">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Come si imposta la proporzione: il metodo in 4 mosse</h2>
+        <div class="pop d1" style="background: #1B1640; color: #FFFFFF; border-radius: 22px; padding: 18px 22px; font-size: clamp(18px, 2.6vw, 24px); font-weight: 800; line-height: 1.4">Domanda magica: <span style="color: #4FD1C5">il … % di CHE COSA?</span> Quella grandezza vale <span style="background: #FFC93C; color: #1B1640; padding: 0 10px; border-radius: 8px">100</span>.</div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{method}}" as="m" hint-placeholder-count="4">
+            <div class="drop" style="{{m.style}}">
+              <span style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: #1B1640; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px">{{m.n}}</span>
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 18px; font-weight: 900">{{m.t}}</span>
+                <span style="font-size: 15px; line-height: 1.45">{{m.ex}}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <button type="button" class="btn" style="background: #4FD1C5; color: #1B1640" onClick="{{moreM}}" disabled="{{mDone}}">Mostra la mossa successiva</button>
+          <button type="button" class="btn" style="background: #F4F2FF; color: #1B1640" onClick="{{resetM}}">Ricomincia</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/5a8ac55f84f094a1f6d2d387c422ecd0.svg" alt="Un sacco di merce" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900; flex: 1 1 300px">Tara in percentuale: simulatore</h2>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 22px">
+          <div class="rise d1" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px; background: #F4F2FF; border-radius: 22px; padding: 18px">
+            <span style="font-weight: 800">1 · Che peso conosco?</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{tKnownBtns}}" as="b" hint-placeholder-count="2"><button type="button" class="chip" style="{{b.style}}" onClick="{{b.pick}}">{{b.label}}</button></sc-for>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Valore in kg
+              <input class="inp" type="text" inputmode="decimal" value="{{tVal}}" onChange="{{setTVal}}">
+            </label>
+            <span style="font-weight: 800">2 · La tara è il … % del</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{tBaseBtns}}" as="b" hint-placeholder-count="2"><button type="button" class="chip" style="{{b.style}}" onClick="{{b.pick}}">{{b.label}}</button></sc-for>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Percentuale di tara %
+              <input class="inp" type="text" inputmode="decimal" value="{{tPct}}" onChange="{{setTPct}}">
+            </label>
+          </div>
+          <div style="flex: 1.3 1 380px; display: flex; flex-direction: column; gap: 12px">
+            <div class="pop" style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="{{tTypeStyle}}">{{tType}}</span>
+              <span style="background: #F4F2FF; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 14px">vale 100: peso {{tBaseName}}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div style="display: flex; height: 58px; border-radius: 16px; overflow: hidden; border: 3px solid #1B1640">
+                <div class="bar" style="{{tNetSeg}}">netto = {{tNetPct}}</div>
+                <div class="bar" style="{{tTaraSeg}}">tara {{tPctTxt}}</div>
+              </div>
+              <span style="font-weight: 800; font-size: 14px">lordo = {{tLorPct}}</span>
+            </div>
+            <div class="pop" style="background: #1B1640; color: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 14px; color: #BDEDE6; font-weight: 700">La proporzione (prima la base!)</span>
+              <span style="font-size: clamp(20px, 3vw, 28px); font-weight: 900">{{tProp}}</span>
+              <span style="font-size: 15px; color: #D9D5F5">{{tCalc}}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+              <div style="background: #FFC93C; border-radius: 14px; padding: 10px 12px"><div style="font-size: 13px; font-weight: 700">Lordo</div><div style="font-size: 18px; font-weight: 900">{{tL}}</div></div>
+              <div style="background: #6FDCA6; border-radius: 14px; padding: 10px 12px"><div style="font-size: 13px; font-weight: 700">Netto</div><div style="font-size: 18px; font-weight: 900">{{tN}}</div></div>
+              <div style="background: #FFB27A; border-radius: 14px; padding: 10px 12px"><div style="font-size: 13px; font-weight: 700">Tara</div><div style="font-size: 18px; font-weight: 900">{{tT}}</div></div>
+            </div>
+            <div style="background: #E3EAFF; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.5"><strong>Tara sull'altra base:</strong> {{tOther}}</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/07aac2e04e67d467a6a7b0be16a66712.svg" alt="Un cartellino del prezzo" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900; flex: 1 1 300px">Ricavo, costo e utile in percentuale</h2>
+        </div>
+        <div class="rise d1" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px">
+          <div style="background: #DDF7EA; border-radius: 14px; padding: 12px; font-size: 14px; line-height: 1.45"><strong>Utile % sul costo</strong> → costo = 100, ricavo = 100 + u <em>(sopracento)</em></div>
+          <div style="background: #FFF4CF; border-radius: 14px; padding: 12px; font-size: 14px; line-height: 1.45"><strong>Utile % sul ricavo</strong> → ricavo = 100, costo = 100 − u <em>(sottocento)</em></div>
+          <div style="background: #FFE0EB; border-radius: 14px; padding: 12px; font-size: 14px; line-height: 1.45"><strong>Perdita % sul costo</strong> → costo = 100, ricavo = 100 − p</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 22px">
+          <div class="rise d2" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px; background: #F4F2FF; border-radius: 22px; padding: 18px">
+            <span style="font-weight: 800">1 · Che cosa conosco?</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{vKnownBtns}}" as="b" hint-placeholder-count="2"><button type="button" class="chip" style="{{b.style}}" onClick="{{b.pick}}">{{b.label}}</button></sc-for>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Valore in €
+              <input class="inp" type="text" inputmode="decimal" value="{{vVal}}" onChange="{{setVVal}}">
+            </label>
+            <span style="font-weight: 800">2 · Utile o perdita?</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{vKindBtns}}" as="b" hint-placeholder-count="2"><button type="button" class="chip" style="{{b.style}}" onClick="{{b.pick}}">{{b.label}}</button></sc-for>
+            </div>
+            <span style="font-weight: 800">3 · La percentuale è calcolata sul</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{vBaseBtns}}" as="b" hint-placeholder-count="2"><button type="button" class="chip" style="{{b.style}}" onClick="{{b.pick}}">{{b.label}}</button></sc-for>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Percentuale %
+              <input class="inp" type="text" inputmode="decimal" value="{{vPct}}" onChange="{{setVPct}}">
+            </label>
+          </div>
+          <div style="flex: 1.3 1 380px; display: flex; flex-direction: column; gap: 12px">
+            <div class="pop" style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="{{vTypeStyle}}">{{vType}}</span>
+              <span style="background: #F4F2FF; border-radius: 10px; padding: 8px 12px; font-weight: 800; font-size: 14px">vale 100: {{vBaseName}}</span>
+            </div>
+            <div style="display: flex; gap: 14px; align-items: flex-end; height: 170px; border-bottom: 4px solid #1B1640; padding: 0 8px">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1"><strong style="font-size: 13px">{{vCPct}}</strong><div class="bar" style="{{vCBar}}"></div><span style="font-weight: 700; font-size: 13px">Costo</span></div>
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1"><strong style="font-size: 13px">{{vRPct}}</strong><div class="bar" style="{{vRBar}}"></div><span style="font-weight: 700; font-size: 13px">Ricavo</span></div>
+            </div>
+            <div class="pop" style="background: #1B1640; color: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 14px; color: #BDEDE6; font-weight: 700">La proporzione (prima la base!)</span>
+              <span style="font-size: clamp(19px, 2.8vw, 26px); font-weight: 900">{{vProp}}</span>
+              <span style="font-size: 15px; color: #D9D5F5">{{vCalc}}</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+              <div style="background: #FF8FB4; border-radius: 14px; padding: 10px 12px"><div style="font-size: 13px; font-weight: 700">Costo</div><div style="font-size: 17px; font-weight: 900">{{vC}}</div></div>
+              <div style="background: #8FB0FF; border-radius: 14px; padding: 10px 12px"><div style="font-size: 13px; font-weight: 700">Ricavo</div><div style="font-size: 17px; font-weight: 900">{{vR}}</div></div>
+              <div style="{{vResStyle}}"><div style="font-size: 13px; font-weight: 700">{{vResName}}</div><div style="font-size: 17px; font-weight: 900">{{vRes}}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Esempi svolti, passo dopo passo</h2>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{exTabs}}" as="t" hint-placeholder-count="3"><button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for>
+        </div>
+        <div class="rise" style="background: #FFF4CF; border-radius: 18px; padding: 16px 18px; font-size: 17px; line-height: 1.5; font-weight: 600">{{exText}}</div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{exSteps}}" as="x" hint-placeholder-count="4">
+            <div class="drop" style="{{x.style}}">
+              <span style="flex: 0 0 auto; min-width: 120px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: .05em">{{x.h}}</span>
+              <span style="font-size: clamp(16px, 2.3vw, 20px); font-weight: 800">{{x.b}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <button type="button" class="btn" style="background: #4FD1C5; color: #1B1640" onClick="{{moreEx}}" disabled="{{exDone}}">Passo successivo</button>
+          <button type="button" class="btn" style="background: #F4F2FF; color: #1B1640" onClick="{{resetEx}}">Ricomincia</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Prova tu: quale proporzione?</h2>
+          <span class="pop" style="background: #4FD1C5; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{score}} / {{qTotal}}</span>
+        </div>
+        <sc-for list="{{quiz}}" as="q" hint-placeholder-count="6">
+          <div class="rise" style="background: #F4F2FF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+            <span style="font-weight: 800; font-size: 17px; line-height: 1.4">{{q.n}}. {{q.text}}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{q.answered}}" hint-placeholder-val="{{ false }}">
+              <span class="pop" style="{{q.fbStyle}}">{{q.fb}}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Riparti.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 0, m: 1, ex: 0, exSub: 1, ans: {},
+      tKnown: 'L', tBase: 'N', tVal: '5150', tPct: '3',
+      vKnown: 'C', vKind: 'U', vBase: 'R', vVal: '8865', vPct: '20'
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Il metodo', 'Tara %', 'Utile e perdita %', 'Esempi svolti', 'Prova tu'];
+    const N = titles.length;
+    const fmt = (n, d) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { maximumFractionDigits: d == null ? 2 : d });
+    const eur = (n) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    const num = (x) => parseFloat(String(x).replace(',', '.'));
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #0F8C80; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const chip = (on) => 'border: 3px solid #1B1640; border-radius: 12px; padding: 8px 14px; min-height: 44px; font-weight: 800; font-size: 15px; ' + (on ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640');
+    const typeStyle = (up) => 'font-weight: 900; font-size: 14px; letter-spacing: .04em; padding: 8px 12px; border-radius: 10px; background: ' + (up ? '#B9A6FF' : '#FF8FB4');
+
+    const M = [
+      ['Trova la base', 'Leggi bene: “tara 2% del peso NETTO” → il netto vale 100.'],
+      ['Dai un valore all’altra grandezza', 'Il lordo è più grande del netto → lordo = 100 + 2 = 102. (Se l’altra è più piccola: 100 − r.)'],
+      ['Scrivi la proporzione mettendo prima la base', '100 : 102 = netto : lordo. Al posto di quello che non conosci scrivi x: 100 : 102 = x : 30.600'],
+      ['Risolvi con la proprietà fondamentale', 'x = 100 × 30.600 ÷ 102 = 30.000 kg netti · tara = 30.600 − 30.000 = 600 kg']
+    ];
+    const mc = ['#E3EAFF', '#FFF4CF', '#DDF7EA', '#FFE0EB'];
+    v.method = M.slice(0, s.m).map((m, i) => ({ n: i + 1, t: m[0], ex: m[1], style: 'display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 18px; background: ' + mc[i] + (i === s.m - 1 ? '; box-shadow: 0 0 0 3px #1B1640' : '') }));
+    v.moreM = () => this.setState({ m: Math.min(M.length, s.m + 1) });
+    v.resetM = () => this.setState({ m: 1 });
+    v.mDone = s.m >= M.length;
+
+    // Tara
+    const tv = num(s.tVal), tp = num(s.tPct);
+    const baseN = s.tBase === 'N';
+    const pN = baseN ? 100 : 100 - tp, pL = baseN ? 100 + tp : 100;
+    let L, Nn;
+    if (s.tKnown === 'L') { L = tv; Nn = L * pN / pL; } else { Nn = tv; L = Nn * pL / pN; }
+    const T = L - Nn;
+    v.tKnownBtns = [['L', 'Peso lordo'], ['N', 'Peso netto']].map((b) => ({ label: b[1], pick: () => this.setState({ tKnown: b[0] }), style: chip(s.tKnown === b[0]) }));
+    v.tBaseBtns = [['N', 'peso netto'], ['L', 'peso lordo']].map((b) => ({ label: b[1], pick: () => this.setState({ tBase: b[0] }), style: chip(s.tBase === b[0]) }));
+    v.tVal = s.tVal; v.tPct = s.tPct;
+    v.setTVal = (e) => this.setState({ tVal: e.target.value });
+    v.setTPct = (e) => this.setState({ tPct: e.target.value });
+    const diretto = (baseN && s.tKnown === 'N') || (!baseN && s.tKnown === 'L');
+    v.tType = (baseN ? 'SOPRACENTO' : 'SOTTOCENTO') + ' · ' + (diretto ? 'diretto' : 'inverso');
+    v.tTypeStyle = typeStyle(baseN);
+    v.tBaseName = baseN ? 'netto' : 'lordo';
+    v.tNetPct = fmt(pN); v.tLorPct = fmt(pL); v.tPctTxt = fmt(tp);
+    v.tNetSeg = 'flex: ' + pN + ' 1 0; background: #6FDCA6; display: flex; align-items: center; padding-left: 12px; font-weight: 800; white-space: nowrap; overflow: hidden';
+    v.tTaraSeg = 'flex: ' + Math.max(tp, 8) + ' 1 0; background: #FFB27A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; white-space: nowrap; overflow: hidden; border-left: 3px solid #1B1640';
+    if (baseN) {
+      v.tProp = '100 : ' + fmt(pL) + ' = ' + (s.tKnown === 'N' ? fmt(tv) + ' : x' : 'x : ' + fmt(tv));
+      v.tCalc = s.tKnown === 'N' ? 'x (lordo) = ' + fmt(pL) + ' × ' + fmt(tv) + ' ÷ 100' : 'x (netto) = 100 × ' + fmt(tv) + ' ÷ ' + fmt(pL);
+      v.tOther = 'tara % sul lordo = ' + fmt(tp) + ' ÷ ' + fmt(pL) + ' × 100 = ' + fmt(tp / pL * 100) + '%';
+    } else {
+      v.tProp = '100 : ' + fmt(pN) + ' = ' + (s.tKnown === 'L' ? fmt(tv) + ' : x' : 'x : ' + fmt(tv));
+      v.tCalc = s.tKnown === 'L' ? 'x (netto) = ' + fmt(pN) + ' × ' + fmt(tv) + ' ÷ 100' : 'x (lordo) = 100 × ' + fmt(tv) + ' ÷ ' + fmt(pN);
+      v.tOther = 'tara % sul netto = ' + fmt(tp) + ' ÷ ' + fmt(pN) + ' × 100 = ' + fmt(tp / pN * 100) + '%';
+    }
+    v.tL = fmt(L) + ' kg'; v.tN = fmt(Nn) + ' kg'; v.tT = fmt(T) + ' kg';
+
+    // Valori
+    const vv = num(s.vVal), vp = num(s.vPct);
+    const util = s.vKind === 'U';
+    const baseC = s.vBase === 'C';
+    let pC, pR;
+    if (baseC) { pC = 100; pR = util ? 100 + vp : 100 - vp; } else { pR = 100; pC = util ? 100 - vp : 100 + vp; }
+    let C, R;
+    if (s.vKnown === 'C') { C = vv; R = C * pR / pC; } else { R = vv; C = R * pC / pR; }
+    v.vKnownBtns = [['C', 'Costo'], ['R', 'Ricavo']].map((b) => ({ label: b[1], pick: () => this.setState({ vKnown: b[0] }), style: chip(s.vKnown === b[0]) }));
+    v.vKindBtns = [['U', 'Utile'], ['P', 'Perdita']].map((b) => ({ label: b[1], pick: () => this.setState({ vKind: b[0] }), style: chip(s.vKind === b[0]) }));
+    v.vBaseBtns = [['C', 'costo'], ['R', 'ricavo']].map((b) => ({ label: b[1], pick: () => this.setState({ vBase: b[0] }), style: chip(s.vBase === b[0]) }));
+    v.vVal = s.vVal; v.vPct = s.vPct;
+    v.setVVal = (e) => this.setState({ vVal: e.target.value });
+    v.setVPct = (e) => this.setState({ vPct: e.target.value });
+    const otherPct = baseC ? pR : pC;
+    const up = otherPct > 100;
+    const knownIsBase = (baseC && s.vKnown === 'C') || (!baseC && s.vKnown === 'R');
+    v.vType = (up ? 'SOPRACENTO' : 'SOTTOCENTO') + ' · ' + (knownIsBase ? 'diretto' : 'inverso');
+    v.vTypeStyle = typeStyle(up);
+    v.vBaseName = baseC ? 'il costo' : 'il ricavo';
+    v.vCPct = 'costo = ' + fmt(pC); v.vRPct = 'ricavo = ' + fmt(pR);
+    const mx = Math.max(pC, pR);
+    v.vCBar = 'width: 100%; max-width: 90px; border-radius: 10px 10px 0 0; background: #FF8FB4; height: ' + (pC / mx * 120) + 'px';
+    v.vRBar = 'width: 100%; max-width: 90px; border-radius: 10px 10px 0 0; background: #8FB0FF; height: ' + (pR / mx * 120) + 'px';
+    const otherName = baseC ? 'ricavo' : 'costo';
+    v.vProp = '100 : ' + fmt(otherPct) + ' = ' + (knownIsBase ? fmt(vv) + ' : x' : 'x : ' + fmt(vv));
+    v.vCalc = knownIsBase ? 'x (' + otherName + ') = ' + fmt(otherPct) + ' × ' + fmt(vv) + ' ÷ 100' : 'x (' + (baseC ? 'costo' : 'ricavo') + ') = 100 × ' + fmt(vv) + ' ÷ ' + fmt(otherPct);
+    v.vC = eur(C); v.vR = eur(R);
+    const res = R - C;
+    v.vResName = res >= 0 ? 'Utile' : 'Perdita';
+    v.vRes = eur(Math.abs(res));
+    v.vResStyle = 'border-radius: 14px; padding: 10px 12px; background: ' + (res >= 0 ? '#6FDCA6' : '#FFB27A');
+
+    // Esempi
+    const EX = [
+      { tab: 'Grano', text: 'Un molino acquista 30.600 kg lordi di grano; la tara è il 2% del peso netto. Calcola peso netto e tara.', steps: [['Base', 'tara % del NETTO → netto = 100'], ['Altra', 'il lordo è più grande → lordo = 100 + 2 = 102'], ['Proporzione', '100 : 102 = x : 30.600 (sopracento inverso)'], ['Risultato', 'x = 100 × 30.600 ÷ 102 = 30.000 kg netti · tara = 600 kg']] },
+      { tab: 'Farina', text: 'Una partita di farina pesa 2.850 kg netti; la tara è il 5% del peso lordo. Calcola peso lordo e tara.', steps: [['Base', 'tara % del LORDO → lordo = 100'], ['Altra', 'il netto è più piccolo → netto = 100 − 5 = 95'], ['Proporzione', '100 : 95 = x : 2.850 (sottocento inverso)'], ['Risultato', 'x = 100 × 2.850 ÷ 95 = 3.000 kg lordi · tara = 150 kg']] },
+      { tab: 'Grano venduto', text: 'Il grano costa in tutto 8.865 € ed è venduto con un utile pari al 20% del ricavo. Calcola il ricavo e l’utile.', steps: [['Base', 'utile % del RICAVO → ricavo = 100'], ['Altra', 'il costo è più piccolo → costo = 100 − 20 = 80'], ['Proporzione', '100 : 80 = x : 8.865 (sottocento inverso)'], ['Risultato', 'x = 100 × 8.865 ÷ 80 = 11.081,25 € · utile = 2.216,25 €']] },
+      { tab: 'Mais venduto', text: 'Il mais costa in tutto 6.695 € ed è venduto con un utile pari al 25% del costo. Calcola il ricavo.', steps: [['Base', 'utile % del COSTO → costo = 100'], ['Altra', 'il ricavo è più grande → ricavo = 100 + 25 = 125'], ['Proporzione', '100 : 125 = 6.695 : x (sopracento diretto)'], ['Risultato', 'x = 125 × 6.695 ÷ 100 = 8.368,75 € · utile = 1.673,75 €']] }
+    ];
+    v.exTabs = EX.map((e, i) => ({ label: e.tab, pick: () => this.setState({ ex: i, exSub: 1 }), style: chip(s.ex === i) }));
+    const ex = EX[s.ex];
+    v.exText = ex.text;
+    v.exSteps = ex.steps.slice(0, s.exSub).map((x, i) => ({ h: x[0], b: x[1], style: 'display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 16px; background: ' + mc[i] + (i === 3 ? '; box-shadow: 0 0 0 3px #1B1640' : '') }));
+    v.moreEx = () => this.setState({ exSub: Math.min(4, s.exSub + 1) });
+    v.resetEx = () => this.setState({ exSub: 1 });
+    v.exDone = s.exSub >= 4;
+
+    const Q = [
+      { text: 'Un carico di patate pesa 12.000 kg lordi; la tara è il 4% del peso lordo. Peso netto?', o: ['100 : 96 = 12.000 : x', '100 : 104 = x : 12.000', '96 : 100 = 12.000 : x'], c: 0, why: 'Il lordo vale 100, il netto 96 → x = 96 × 12.000 ÷ 100 = 11.520 kg' },
+      { text: 'Una partita di legumi pesa 6.400 kg netti; la tara è il 2,5% del peso netto. Peso lordo?', o: ['100 : 97,5 = 6.400 : x', '100 : 102,5 = 6.400 : x', '100 : 102,5 = x : 6.400'], c: 1, why: 'Il netto vale 100, il lordo 102,5 → x = 102,5 × 6.400 ÷ 100 = 6.560 kg' },
+      { text: 'Un carico di frutta pesa 49,60 kg netti; la tara è lo 0,8% del peso lordo. Peso lordo?', o: ['100 : 99,2 = x : 49,60', '100 : 100,8 = 49,60 : x', '100 : 99,2 = 49,60 : x'], c: 0, why: 'Il lordo vale 100, il netto 99,2 → x = 100 × 49,60 ÷ 99,2 = 50 kg' },
+      { text: 'Uno smartwatch costa 35 € e si vuole un utile del 30% del costo. Prezzo di vendita?', o: ['100 : 70 = 35 : x', '100 : 130 = 35 : x', '100 : 130 = x : 35'], c: 1, why: 'Il costo vale 100, il ricavo 130 → x = 130 × 35 ÷ 100 = 45,50 €' },
+      { text: 'Una merce costa 600 € ed è venduta con un utile del 25% del ricavo. Ricavo?', o: ['100 : 125 = 600 : x', '100 : 75 = x : 600', '100 : 75 = 600 : x'], c: 1, why: 'Il ricavo vale 100, il costo 75 → x = 100 × 600 ÷ 75 = 800 €' },
+      { text: 'Una cassa pesa 840 kg lordi e 800 kg netti. Qual è la tara in % del netto?', o: ['4,76%', '5%', '40%'], c: 1, why: 'Tara = 40 kg → 40 ÷ 800 × 100 = 5% (sul lordo sarebbe 40 ÷ 840 × 100 = 4,76%)' }
+    ];
+    let score = 0;
+    v.quiz = Q.map((q, qi) => {
+      const pick = s.ans[qi];
+      const answered = pick != null;
+      if (pick === q.c) score++;
+      return {
+        n: qi + 1, text: q.text, answered,
+        fb: pick === q.c ? 'Esatto! ' + q.why : 'Non proprio. ' + q.why,
+        fbStyle: 'font-weight: 700; font-size: 15px; padding: 10px 14px; border-radius: 12px; ' + (pick === q.c ? 'background: #DDF7EA; color: #0B6B41' : 'background: #FFE0EB; color: #A3164B'),
+        opts: q.o.map((lab, oi) => {
+          let bg = '#FFFFFF', bd = '#D9D3FA';
+          if (answered && oi === q.c) { bg = '#6FDCA6'; bd = '#0B6B41'; }
+          else if (answered && oi === pick) { bg = '#FF8FB4'; bd = '#A3164B'; }
+          return { label: lab, pick: () => this.setState({ ans: Object.assign({}, s.ans, { [qi]: oi }) }), style: 'border: 3px solid ' + bd + '; background: ' + bg + '; color: #1B1640; border-radius: 14px; padding: 10px 18px; min-height: 44px; font-weight: 800; font-size: 16px' };
+        })
+      };
+    });
+    v.score = score; v.qTotal = Q.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>

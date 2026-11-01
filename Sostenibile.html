@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Ambiente e impresa sostenibile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EEFBF4;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slide{0%{transform:translateX(0);opacity:0}10%{opacity:1}85%{opacity:1}100%{transform:translateX(var(--dist));opacity:0}}
+@keyframes fall{0%{transform:translateY(-20px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.spin{animation:spin 14s linear infinite}
+.breathe{animation:breathe 3s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-6px)}}
+.wob{animation:wob 3.4s ease-in-out infinite}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.chip:hover{transform:translateY(-2px)}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #6FDCA6; border-radius: 10px; padding: 4px 10px">09</span>Ambiente e impresa sostenibile</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #CDEFDD; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="5">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #CDEFDD">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Lo sviluppo sostenibile</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center">
+          <div class="pop d1" style="flex: 0 0 auto; position: relative; width: 240px; height: 240px">
+            <img class="breathe" src="img/528fc28c55a9e081ddccb70ef7690b1d.svg" alt="Il pianeta Terra" style="position: absolute; left: 20px; top: 20px; width: 200px; height: 200px">
+            <span class="pop d3" style="position: absolute; left: 0; top: 10px; background: #FFC93C; border-radius: 14px; padding: 8px 12px; font-weight: 800">Noi oggi</span>
+            <span class="pop d5" style="position: absolute; right: 0; bottom: 10px; background: #8FB0FF; border-radius: 14px; padding: 8px 12px; font-weight: 800">Chi verrà domani</span>
+          </div>
+          <div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 14px">
+            <blockquote class="rise d2" style="margin: 0; background: #1B1640; color: #FFFFFF; border-radius: 22px; padding: 20px 22px; font-size: clamp(18px, 2.4vw, 22px); font-weight: 700; line-height: 1.45">«Uno sviluppo in grado di soddisfare i bisogni delle generazioni attuali senza compromettere la possibilità che le generazioni future riescano a soddisfare i propri.»</blockquote>
+            <p class="rise d3" style="margin: 0; font-size: 16px; line-height: 1.5; color: #4B4670">Rapporto Brundtland, <strong style="color: #1B1640">1987</strong>. Gro Harlem Brundtland, politica norvegese, presidente della Commissione mondiale ONU su Ambiente e Sviluppo, presentò la relazione «Our common future» (Il futuro di tutti noi).</p>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Tre tipi di sostenibilità</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; color: #4B4670">Tocca un cerchio: dove si incontrano tutti e tre, l'impresa è davvero sostenibile.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+          <div style="flex: 0 0 auto; position: relative; width: 320px; height: 300px; max-width: 100%">
+            <button type="button" class="chip pop" style="{{c0}}" onClick="{{p0}}">Ambientale</button>
+            <button type="button" class="chip pop d2" style="{{c1}}" onClick="{{p1}}">Sociale</button>
+            <button type="button" class="chip pop d4" style="{{c2}}" onClick="{{p2}}">Economica</button>
+          </div>
+          <div class="pop" style="{{susBox}}">
+            <span style="font-size: 24px; font-weight: 900">Sostenibilità {{susTitle}}</span>
+            <span style="font-size: 16px; font-weight: 700">{{susDef}}</span>
+            <span style="font-size: 15px; font-weight: 800; margin-top: 4px">L'azienda deve:</span>
+            <sc-for list="{{susLines}}" as="l" hint-placeholder-count="3">
+              <span class="rise" style="font-size: 15px; line-height: 1.45; display: flex; gap: 8px"><span style="font-weight: 900">✓</span><span>{{l}}</span></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Economia lineare o circolare?</h2>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{ecoTabs}}" as="t" hint-placeholder-count="2">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{lin}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 18px">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+              <sc-for list="{{linSteps}}" as="l" hint-placeholder-count="4">
+                <span class="pop" style="{{l.style}}">{{l.label}}</span>
+                <sc-if value="{{l.arrow}}" hint-placeholder-val="{{ true }}"><span style="font-size: 26px; font-weight: 900">→</span></sc-if>
+              </sc-for>
+            </div>
+            <div class="rise d3" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+              <img src="img/94dc7bf6e5fa51d617485fa02371c9bc.svg" alt="Una discarica" class="wob" style="width: 110px; height: 110px">
+              <p style="margin: 0; font-size: 17px; line-height: 1.5; flex: 1 1 280px">Gli scarti <strong>non vengono riutilizzati</strong> ma smaltiti come rifiuti e finiscono in discarica. Problemi:</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px">
+              <div class="rise d4" style="background: #FFE0EB; border-radius: 16px; padding: 14px; font-size: 15px">Le discariche <strong>occupano grandi superfici</strong> tolte ad altri usi.</div>
+              <div class="rise d5" style="background: #FFE0EB; border-radius: 16px; padding: 14px; font-size: 15px"><strong>Inquinamento</strong>: i rifiuti rilasciano sostanze nocive nell'aria e nel terreno.</div>
+              <div class="rise d6" style="background: #FFE0EB; border-radius: 16px; padding: 14px; font-size: 15px">Nel tempo si <strong>altera l'ecosistema</strong>, anche tramite animali e insetti.</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{circ}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center">
+            <div class="pop" style="flex: 0 0 auto; position: relative; width: 260px; height: 260px">
+              <div class="spin" style="position: absolute; inset: 0; border-radius: 50%; border: 14px dashed #6FDCA6"></div>
+              <span style="position: absolute; left: 50%; top: -6px; transform: translateX(-50%); background: #FFC93C; border-radius: 12px; padding: 6px 12px; font-weight: 900">Produci</span>
+              <span style="position: absolute; right: -14px; top: 58%; background: #8FB0FF; border-radius: 12px; padding: 6px 12px; font-weight: 900">Usa</span>
+              <span style="position: absolute; left: -14px; top: 58%; background: #FF8FB4; border-radius: 12px; padding: 6px 12px; font-weight: 900">Recupera</span>
+              <img src="img/80d3dfba38c8dba80c7880794f66dd2d.svg" alt="Un bidone per il riciclo" class="breathe" style="position: absolute; left: 70px; top: 70px; width: 120px; height: 120px">
+            </div>
+            <div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 12px">
+              <p class="rise d1" style="margin: 0; font-size: 17px; line-height: 1.5">L'economia circolare punta a una <strong>crescita sostenibile</strong> organizzando la produzione per:</p>
+              <div class="rise d2" style="background: #DDF7EA; border-radius: 16px; padding: 14px; font-weight: 700">allungare la vita utile dei prodotti</div>
+              <div class="rise d3" style="background: #DDF7EA; border-radius: 16px; padding: 14px; font-weight: 700">ridurre al minimo i rifiuti</div>
+              <div class="rise d4" style="background: #DDF7EA; border-radius: 16px; padding: 14px; font-weight: 700">usare risorse rinnovabili</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Il modello delle 3R</h2>
+          <span class="pop" style="background: #6FDCA6; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{rScore}} / {{rTotal}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+          <div class="pop d1" style="background: #FFC93C; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><img src="img/6e0d8ff32352a3e97218a7b7754a609d.svg" alt="Una borraccia" class="wob" style="width: 88px; height: 88px"><span style="font-size: 26px; font-weight: 900">Ridurre</span><span style="font-size: 15px">usare una minore quantità di risorse</span></div>
+          <div class="pop d2" style="background: #8FB0FF; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><img src="img/5b499266138bd79a16896d0c5548e90c.svg" alt="Un barattolo usato come portapenne" class="wob" style="width: 88px; height: 88px; animation-delay: -1s"><span style="font-size: 26px; font-weight: 900">Riutilizzare</span><span style="font-size: 15px">recuperare e usare di nuovo prodotti e componenti</span></div>
+          <div class="pop d3" style="background: #6FDCA6; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><img src="img/80d3dfba38c8dba80c7880794f66dd2d.svg" alt="Un bidone per il riciclo" class="wob" style="width: 88px; height: 88px; animation-delay: -2s"><span style="font-size: 26px; font-weight: 900">Riciclare</span><span style="font-size: 15px">trasformare gli scarti in nuovi materiali (materia prima secondaria)</span></div>
+        </div>
+        <strong class="rise d4" style="font-size: 18px">Quale R stai usando?</strong>
+        <sc-for list="{{rq}}" as="g" hint-placeholder-count="6">
+          <div class="rise" style="{{g.box}}">
+            <span style="font-weight: 800; font-size: 16px; flex: 1 1 240px">{{g.text}}</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Le relazioni tra azienda e ambiente</h2>
+        <div class="rise d1" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+          <strong style="font-size: 15px">Ambiente generale:</strong>
+          <span style="background: #DDF7EA; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700">fisico-naturale</span>
+          <span style="background: #FFF4CF; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700">economico generale</span>
+          <span style="background: #FFE0EB; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700">socioculturale</span>
+          <span style="background: #E3EAFF; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700">tecnologico</span>
+          <span style="background: #ECE6FF; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 700">politico-legislativo</span>
+        </div>
+        <p class="rise d2" style="margin: 0; font-size: 16px; color: #4B4670"><strong style="color: #1B1640">Ambiente specifico</strong>: gli <strong style="color: #1B1640">stakeholder</strong>, cioè i soggetti interni ed esterni che hanno rapporti con l'azienda. Tocca uno stakeholder per vedere che cosa si scambiano.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: center">
+          <div style="flex: 1 1 400px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 520px">
+            <sc-for list="{{hub}}" as="h" hint-placeholder-count="9">
+              <sc-if value="{{h.center}}" hint-placeholder-val="{{ false }}">
+                <span class="breathe" style="display: flex; align-items: center; justify-content: center; min-height: 96px; border-radius: 50%; background: #1B1640; color: #FFFFFF; font-weight: 900; font-size: 16px">AZIENDA</span>
+              </sc-if>
+              <sc-if value="{{h.side}}" hint-placeholder-val="{{ true }}">
+                <button type="button" class="chip pop" style="{{h.style}}" onClick="{{h.pick}}">{{h.label}}</button>
+              </sc-if>
+            </sc-for>
+          </div>
+          <div class="pop" style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; background: #F4F2FF; border-radius: 22px; padding: 20px">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <img data-dc-src="{{shImg}}" alt="" class="wob" style="width: 84px; height: 84px; flex: 0 0 auto">
+              <span style="font-size: 24px; font-weight: 900">{{shName}}</span>
+            </div>
+            <span style="font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: #4B4670">{{shKind}}</span>
+            <div class="rise" style="background: #6FDCA6; border-radius: 14px; padding: 12px 14px; display: flex; gap: 10px; align-items: center"><span style="font-size: 22px; font-weight: 900">←</span><span><strong>L'azienda riceve:</strong> {{shIn}}</span></div>
+            <div class="rise d1" style="background: #FFB27A; border-radius: 14px; padding: 12px 14px; display: flex; gap: 10px; align-items: center"><span style="font-size: 22px; font-weight: 900">→</span><span><strong>L'azienda dà:</strong> {{shOut}}</span></div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Organizzazione.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, sus: 0, eco: 'lin', r: {}, sh: 0 };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Sviluppo sostenibile', '3 sostenibilità', 'Lineare o circolare', 'Le 3R', 'Azienda e ambiente'];
+    const N = titles.length;
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #12A867; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const optStyle = (state) => 'border: 3px solid ' + (state === 'ok' ? '#0B6B41' : state === 'ko' ? '#A3164B' : '#1B1640') + '; background: ' + (state === 'ok' ? '#6FDCA6' : state === 'ko' ? '#FF8FB4' : '#FFFFFF') + '; color: #1B1640; border-radius: 12px; padding: 8px 14px; min-height: 44px; font-weight: 800; font-size: 14px';
+
+    const SUS = [
+      ['ambientale', '#6FDCA6', 'Tutela dell’ecosistema: attenzione al consumo delle risorse naturali e al loro rinnovamento.', ['controllare l’impatto ambientale della produzione', 'evitare danni all’ambiente con la prevenzione']],
+      ['sociale', '#FFC93C', 'Distribuire in modo equo il benessere e migliorare le condizioni di vita.', ['garantire giustizia e uguaglianza ai dipendenti', 'escludere ogni discriminazione nei contratti', 'creare sicurezza sul posto di lavoro']],
+      ['economica', '#8FB0FF', 'Produrre reddito e garantire occupazione in modo duraturo, ripensando i modelli di consumo.', ['usare tecnologie bio ed efficienza energetica', 'comprare materie prime ecologiche e biodegradabili', 'riutilizzare, ridurre gli scarti e riciclare']]
+    ];
+    const pos = [['left: 40px', 'top: 0'], ['left: 0', 'top: 110px'], ['left: 120px', 'top: 110px']];
+    const circ = (i) => 'position: absolute; ' + pos[i][0] + '; ' + pos[i][1] + '; width: 190px; height: 190px; border-radius: 50%; border: 0; font-weight: 900; font-size: 17px; color: #1B1640; mix-blend-mode: multiply; background: ' + SUS[i][1] + '; opacity: ' + (s.sus === i ? '1' : '.6') + '; box-shadow: ' + (s.sus === i ? 'inset 0 0 0 5px #1B1640' : 'none') + '; display: flex; align-items: ' + (i === 0 ? 'flex-start' : 'flex-end') + '; justify-content: ' + (i === 0 ? 'center' : i === 1 ? 'flex-start' : 'flex-end') + '; padding: 34px';
+    v.c0 = circ(0); v.c1 = circ(1); v.c2 = circ(2);
+    v.p0 = () => this.setState({ sus: 0 }); v.p1 = () => this.setState({ sus: 1 }); v.p2 = () => this.setState({ sus: 2 });
+    v.susTitle = SUS[s.sus][0]; v.susDef = SUS[s.sus][2]; v.susLines = SUS[s.sus][3];
+    v.susBox = 'flex: 1 1 320px; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 22px; background: ' + SUS[s.sus][1];
+
+    v.ecoTabs = [['lin', 'Economia lineare'], ['circ', 'Economia circolare']].map((t) => ({ label: t[1], pick: () => this.setState({ eco: t[0] }), style: 'border: 3px solid #1B1640; border-radius: 12px; padding: 10px 16px; min-height: 44px; font-weight: 800; font-size: 15px; ' + (s.eco === t[0] ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    v.lin = s.eco === 'lin'; v.circ = s.eco === 'circ';
+    const LS = [['Prendi', '#FFC93C'], ['Produci', '#8FB0FF'], ['Usa', '#B9A6FF'], ['Butta', '#FF8FB4']];
+    v.linSteps = LS.map((l, i) => ({ label: l[0], arrow: i < LS.length - 1, style: 'background: ' + l[1] + '; border-radius: 16px; padding: 14px 22px; font-weight: 900; font-size: 20px; animation-delay: ' + (i * 0.2) + 's' }));
+
+    const RQ = [['Stampare i compiti fronte-retro', 0], ['Usare un barattolo di vetro come portapenne', 1], ['Separare la plastica nella raccolta differenziata', 2], ['Comprare prodotti con meno imballaggi', 0], ['Riparare la bici invece di comprarne una nuova', 1], ['Trasformare bottiglie di plastica in tessuto per felpe', 2]];
+    const R = ['Ridurre', 'Riutilizzare', 'Riciclare'];
+    let rScore = 0;
+    v.rq = RQ.map((g, i) => {
+      const pick = s.r[i];
+      if (pick === g[1]) rScore++;
+      return {
+        text: g[0],
+        box: 'display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px; background: ' + (pick == null ? '#F4F2FF' : pick === g[1] ? '#DDF7EA' : '#FFE0EB') + '; animation-delay: ' + (i * 0.05) + 's',
+        opts: R.map((lab, oi) => ({ label: lab, pick: () => this.setState({ r: Object.assign({}, s.r, { [i]: oi }) }), style: optStyle(pick == null ? '' : oi === g[1] ? 'ok' : oi === pick ? 'ko' : '') }))
+      };
+    });
+    v.rScore = rScore; v.rTotal = RQ.length;
+
+    const SH = [
+      ['Titolare', 'interno', 'capitale e lavoro', 'l’utile', '#FFC93C'],
+      ['Lavoratori', 'interno', 'lavoro', 'la retribuzione', '#FFC93C'],
+      ['Clienti', 'esterno', 'il prezzo pagato', 'prodotti e servizi', '#8FB0FF'],
+      ['Fornitori', 'esterno', 'beni e servizi', 'il prezzo pagato', '#8FB0FF'],
+      ['Finanziatori', 'esterno', 'prestiti di denaro', 'gli interessi', '#B9A6FF'],
+      ['Stato', 'esterno', 'servizi pubblici e infrastrutture', 'imposte e tasse', '#B9A6FF'],
+      ['Comunità', 'esterno', 'il consenso al suo operato', 'lavoro e benessere per chi vive vicino', '#6FDCA6'],
+      ['Territorio', 'esterno', 'le risorse naturali', 'l’impegno a rispettare e tutelare l’ambiente', '#6FDCA6']
+    ];
+    const order = [0, 2, 3, 1, -1, 4, 5, 6, 7];
+    v.hub = order.map((k, i) => {
+      if (k < 0) return { center: true, side: false };
+      const h = SH[k];
+      return { center: false, side: true, label: h[0], pick: () => this.setState({ sh: k }),
+        style: 'border: 3px solid ' + (s.sh === k ? '#1B1640' : 'transparent') + '; min-height: 96px; border-radius: 20px; font-weight: 900; font-size: clamp(13px, 1.8vw, 16px); color: #1B1640; background: ' + h[4] + '; animation-delay: ' + (i * 0.06) + 's; transform: ' + (s.sh === k ? 'scale(1.06)' : 'none') };
+    });
+    const cur = SH[s.sh];
+    v.shImg = '/_blob/' + ['353faad1a581398502f504b5033ed49a', '2fc789515b8983bfa7f7c30f079c241b', '4b84cc1db3c2a154cbf8f5ee748e3539', '5c799ab12d09ea33b4d608a011fc6c42', '438284234d3fa2c0989e2a88311a8d38', 'e312ef26ca8dd2d934a56aeb4cffed4f', 'e955d50771a17de8dbc7a207e0276fc3', '528fc28c55a9e081ddccb70ef7690b1d'][s.sh];
+    v.shName = cur[0]; v.shKind = 'stakeholder ' + cur[1]; v.shIn = cur[2]; v.shOut = cur[3];
+    return v;
+  }
+}
+</script>
+</body>
+</html>

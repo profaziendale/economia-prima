@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="94" fill="#FFE9D6"/>
+<path d="M30 78 L100 38 L170 78 Z" fill="#FFC93C" stroke="#1B1640" stroke-width="5" stroke-linejoin="round"/>
+<text x="100" y="72" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="26" fill="#1B1640">€</text>
+<rect x="36" y="78" width="128" height="12" fill="#FFFFFF" stroke="#1B1640" stroke-width="4"/>
+<g fill="#FFFFFF" stroke="#1B1640" stroke-width="4"><rect x="46" y="92" width="16" height="56"/><rect x="78" y="92" width="16" height="56"/><rect x="106" y="92" width="16" height="56"/><rect x="138" y="92" width="16" height="56"/></g>
+<rect x="30" y="148" width="140" height="14" fill="#FF7A1A" stroke="#1B1640" stroke-width="4"/>
+<rect x="22" y="162" width="156" height="12" fill="#FF7A1A" stroke="#1B1640" stroke-width="4"/>
+</svg>

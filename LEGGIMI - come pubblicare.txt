@@ -1,0 +1,55 @@
+ECONOMIA 1AE – COME PUBBLICARE IL SITO SU GITHUB PAGES
+=====================================================
+
+Questa cartella è il sito completo: dashboard, 11 lezioni animate e Palestra
+con 42 esercizi. Funziona in qualsiasi browser, senza Claude e senza account
+per gli studenti.
+
+Cosa c'è dentro
+- index.html ............ la dashboard (pagina iniziale)
+- Misure.html … Gestione.html .. le 11 lezioni
+- Allenamento.html ...... la Palestra di esercizi
+- support.js ............ il motore che fa funzionare animazioni ed esercizi
+- img/ .................. le illustrazioni
+(questo file LEGGIMI non serve caricarlo, ma non fa danni)
+
+
+PASSO 1 – Account GitHub (solo la prima volta)
+  Vai su https://github.com e crea un account gratuito (Sign up).
+  Il nome utente comparirà nell'indirizzo del sito.
+
+PASSO 2 – Crea il repository
+  1. In alto a destra premi "+" → "New repository".
+  2. Repository name: economia-prima
+  3. Scegli "Public" (serve per GitHub Pages gratuito).
+  4. Premi "Create repository".
+
+PASSO 3 – Carica i file
+  1. Nella pagina del repository appena creato premi il link
+     "uploading an existing file".
+  2. Apri questa cartella nel Finder, seleziona TUTTO il contenuto
+     (Cmd + A: i file .html, support.js e la cartella img) e trascinalo
+     nella pagina di GitHub. Usa Chrome, Edge o Safari aggiornati:
+     la cartella img deve arrivare con dentro le sue immagini.
+  3. Aspetta che finisca il caricamento e premi "Commit changes".
+
+PASSO 4 – Attiva il sito
+  1. Nel repository vai su "Settings" → nel menu a sinistra "Pages".
+  2. In "Build and deployment" → Source: "Deploy from a branch".
+  3. Branch: "main", cartella "/ (root)" → "Save".
+  4. Dopo 1–2 minuti, ricaricando la pagina, compare l'indirizzo:
+        https://NOMEUTENTE.github.io/economia-prima/
+     È il link da dare agli studenti (anche come QR code o su Classroom).
+
+PER AGGIORNARE IL SITO IN FUTURO
+  Apri il repository → "Add file" → "Upload files" → trascina i file nuovi
+  o modificati (stesso nome) → "Commit changes". Il sito si aggiorna in
+  1–2 minuti.
+
+NOTE
+- Le soluzioni degli esercizi sono nel sito: va bene per allenarsi,
+  non per le verifiche.
+- I punteggi restano solo sul dispositivo dello studente e si azzerano
+  ricaricando la pagina: nessun dato viene raccolto.
+- Se la rete della scuola blocca Google Fonts, le pagine usano un
+  carattere di sistema simile: tutto il resto funziona lo stesso.

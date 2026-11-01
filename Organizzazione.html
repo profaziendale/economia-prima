@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Persone e organizzazione</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EEF2FF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.growY{animation:growY .4s cubic-bezier(.2,.8,.2,1) both;transform-origin:top}
+.growX{animation:growX .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-6px)}}
+.wob{animation:wob 3.4s ease-in-out infinite}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #8FB0FF; border-radius: 10px; padding: 4px 10px">10</span>Persone e organizzazione</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #D6DFFB; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="5">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #D6DFFB">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/353faad1a581398502f504b5033ed49a.svg" alt="Una valigetta da lavoro" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">L'imprenditore</h2>
+        </div>
+        <blockquote class="pop d1" style="margin: 0; background: #1B1640; color: #FFFFFF; border-radius: 22px; padding: 18px 22px; font-size: clamp(17px, 2.3vw, 21px); font-weight: 700; line-height: 1.45">«È imprenditore chi esercita professionalmente una attività economica organizzata al fine della produzione o dello scambio di beni o di servizi.» <span style="color: #FFC93C">— art. 2082 codice civile</span></blockquote>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px">
+          <div class="rise d2" style="background: #E3EAFF; border-radius: 18px; padding: 16px; font-size: 16px; line-height: 1.5">Costituisce l'azienda <strong>portando i propri capitali</strong>.</div>
+          <div class="rise d3" style="background: #E3EAFF; border-radius: 18px; padding: 16px; font-size: 16px; line-height: 1.5"><strong>Organizza e svolge</strong> l'attività e se ne <strong>assume la responsabilità</strong>.</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 14px">
+          <div class="pop d3" style="flex: 1 1 300px; background: #FFC93C; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 20px; font-weight: 900">Soggetto ECONOMICO</span>
+            <span style="font-size: 15px; line-height: 1.5">Chi fa le <strong>scelte di gestione</strong> dell'azienda.</span>
+          </div>
+          <div class="pop d4" style="flex: 1 1 300px; background: #8FB0FF; border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 20px; font-weight: 900">Soggetto GIURIDICO</span>
+            <span style="font-size: 15px; line-height: 1.5">Chi ha <strong>diritti e obblighi</strong> che nascono dall'attività aziendale.</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{ownTabs}}" as="t" hint-placeholder-count="3">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <div class="pop" style="background: #F4F2FF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 18px; font-weight: 900">{{ownTitle}}</span>
+          <span style="font-size: 15px; line-height: 1.5">{{ownText}}</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/2fc789515b8983bfa7f7c30f079c241b.svg" alt="Due persone" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">I lavoratori</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
+          <div class="pop d1" style="background: #E3EAFF; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 22px; font-weight: 900">Dipendenti · interni</span>
+            <span style="font-size: 15px">✓ lavorano in modo <strong>continuativo</strong></span>
+            <span style="font-size: 15px">✓ seguono l'organizzazione decisa dal <strong>datore di lavoro</strong></span>
+            <span style="font-size: 15px">✓ ricevono una <strong>retribuzione</strong> stabilita in base al tempo di lavoro</span>
+          </div>
+          <div class="pop d2" style="background: #FFE0EB; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 22px; font-weight: 900">Autonomi · esterni</span>
+            <span style="font-size: 15px">✓ lavorano in modo <strong>discontinuo</strong>, con competenze specialistiche</span>
+            <span style="font-size: 15px">✓ si organizzano <strong>da soli</strong></span>
+            <span style="font-size: 15px">✓ ricevono un <strong>compenso</strong> per ogni prestazione</span>
+            <span style="font-size: 14px; color: #4B4670">Es.: commercialisti, ingegneri, avvocati, architetti, agenti di commercio</span>
+          </div>
+        </div>
+        <strong class="rise d3" style="font-size: 18px">La scala dei lavoratori dipendenti</strong>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+          <sc-for list="{{pyr}}" as="p" hint-placeholder-count="4">
+            <div class="pop" style="{{p.style}}"><strong>{{p.name}}</strong><span style="font-size: 13px; font-weight: 600">{{p.text}}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/1105fd73c1044715cb2190e79457ea09.svg" alt="Una mappa con un segnaposto" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900; flex: 1 1 300px">Dove mettere l'azienda? La localizzazione</h2>
+        </div>
+        <p class="rise d1" style="margin: 0; font-size: 17px; color: #4B4670">Significa trovare il <strong style="color: #1B1640">luogo più adatto</strong> per svolgere l'attività. Che cosa conta?</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px">
+          <sc-for list="{{factors}}" as="f" hint-placeholder-count="6">
+            <span class="pop" style="{{f.style}}">{{f.label}}</span>
+          </sc-for>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px">
+          <div class="rise d4" style="background: #FFF4CF; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+            <strong style="font-size: 18px">Distretto industriale</strong>
+            <span style="font-size: 15px; line-height: 1.5">Tante imprese piccole e medie dello <strong>stesso territorio</strong> che condividono conoscenze e lavorano in modo integrato.</span>
+          </div>
+          <div class="rise d5" style="background: #DDF7EA; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+            <strong style="font-size: 18px">Filiera produttiva</strong>
+            <span style="font-size: 15px; line-height: 1.5">Aziende che collaborano facendo, <strong>una dopo l'altra</strong>, le singole fasi di un processo produttivo.</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{locTabs}}" as="t" hint-placeholder-count="3">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <div class="pop" style="background: #E3EAFF; border-radius: 18px; padding: 16px 18px; font-size: 16px; line-height: 1.5">{{locText}}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/16ee53dbe1940cf2cfdef356f0034c2a.svg" alt="Un ingranaggio" class="wob" style="width: 84px; height: 84px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Le funzioni aziendali</h2>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{fnTabs}}" as="t" hint-placeholder-count="3">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <div class="pop" style="{{fnHead}}">{{fnDesc}}</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+          <sc-for list="{{fnCards}}" as="c" hint-placeholder-count="4">
+            <div class="rise" style="{{c.style}}">
+              <strong style="font-size: 17px">{{c.name}}</strong>
+              <span style="font-size: 14px; line-height: 1.45">{{c.text}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">L'organigramma</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; color: #4B4670">È il disegno della <strong style="color: #1B1640">struttura organizzativa</strong>: chi c'è, chi dipende da chi. Le linee verticali sono rapporti <strong style="color: #1B1640">gerarchici (line)</strong>, quelle orizzontali rapporti <strong style="color: #1B1640">informativi (staff)</strong>.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{orgTabs}}" as="t" hint-placeholder-count="3">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <div style="background: #F4F2FF; border-radius: 22px; padding: 22px 12px; overflow-x: auto">
+          <div style="min-width: 560px; display: flex; flex-direction: column; align-items: center">
+            <div style="display: flex; align-items: center; gap: 0">
+              <span class="pop" style="background: #1B1640; color: #FFFFFF; border-radius: 14px; padding: 12px 20px; font-weight: 900; text-align: center">{{orgTop}}</span>
+              <sc-if value="{{orgStaff}}" hint-placeholder-val="{{ false }}">
+                <span class="growX d2" style="width: 50px; height: 0; border-top: 3px dashed #1B1640; transform-origin: left"></span>
+                <span class="pop d3" style="background: #FFC93C; border-radius: 14px; padding: 10px 14px; font-weight: 800; font-size: 14px">Organi di staff</span>
+              </sc-if>
+            </div>
+            <span class="growY d1" style="width: 3px; height: 26px; background: #1B1640"></span>
+            <span class="growX d2" style="width: 68%; height: 3px; background: #1B1640"></span>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 80%; gap: 12px">
+              <sc-for list="{{orgKids}}" as="k" hint-placeholder-count="3">
+                <div style="display: flex; flex-direction: column; align-items: center">
+                  <span class="growY d3" style="width: 3px; height: 22px; background: #1B1640"></span>
+                  <span class="pop" style="{{k.style}}">{{k.mid}}</span>
+                  <sc-if value="{{k.hasLow}}" hint-placeholder-val="{{ true }}">
+                    <span class="growY d5" style="width: 3px; height: 18px; background: #1B1640"></span>
+                    <span class="pop d6" style="background: #FFFFFF; border: 2px solid #1B1640; border-radius: 12px; padding: 8px 10px; font-weight: 700; font-size: 13px; text-align: center">{{k.low}}</span>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div class="pop" style="background: #E3EAFF; border-radius: 16px; padding: 14px 16px; font-size: 16px; line-height: 1.5">{{orgNote}}</div>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Gestione.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, own: 0, loc: 0, fn: 0, org: 0 };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Imprenditore', 'Lavoratori', 'Localizzazione', 'Funzioni', 'Organigramma'];
+    const N = titles.length;
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #2453E0; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const tab = (on) => 'border: 3px solid #1B1640; border-radius: 12px; padding: 10px 16px; min-height: 44px; font-weight: 800; font-size: 15px; ' + (on ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640');
+
+    const OWN = [
+      ['Azienda individuale', 'Una persona sola. L’imprenditore è sia soggetto economico sia soggetto giuridico.'],
+      ['Società di persone', 'Due o più soci, senza personalità giuridica (snc, sas). Soggetto giuridico: i soci. Soggetto economico: i soci e i collaboratori coinvolti.'],
+      ['Società di capitali', 'Con personalità giuridica (srl, spa, sapa, cooperative). Soggetto giuridico: la società. Soggetto economico: soci e collaboratori coinvolti.']
+    ];
+    v.ownTabs = OWN.map((o, i) => ({ label: o[0], pick: () => this.setState({ own: i }), style: tab(s.own === i) }));
+    v.ownTitle = OWN[s.own][0]; v.ownText = OWN[s.own][1];
+
+    const PY = [['Dirigenti', 'prendono le decisioni sull’impresa', '#FFC93C', 34], ['Quadri', 'organizzano e controllano impiegati e operai', '#FFD978', 52], ['Impiegati', 'svolgono lavori non manuali', '#8FB0FF', 72], ['Operai', 'svolgono le attività manuali', '#B9CCFF', 92]];
+    v.pyr = PY.map((p, i) => ({ name: p[0], text: p[1], style: 'width: ' + p[3] + '%; min-width: 220px; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px; box-sizing: border-box; border-radius: 14px; text-align: center; background: ' + p[2] + '; animation-delay: ' + (0.3 + i * 0.15) + 's' }));
+
+    const F = ['ambiente naturale', 'vicinanza ai mercati', 'infrastrutture fisiche e telematiche', 'lavoratori qualificati', 'incentivi di legge', 'aziende simili o complementari'];
+    const fc = ['#DDF7EA', '#FFF4CF', '#E3EAFF', '#FFE0EB', '#ECE6FF', '#FFE9D6'];
+    v.factors = F.map((f, i) => ({ label: f, style: 'background: ' + fc[i] + '; border-radius: 999px; padding: 10px 16px; font-weight: 800; font-size: 15px; animation-delay: ' + (0.2 + i * 0.1) + 's' }));
+    const LOC = [
+      ['Azienda divisa', 'Svolge l’attività in più luoghi: sede centrale, stabilimenti, depositi periferici.'],
+      ['Delocalizzazione', 'Trasferisce in un altro luogo, di solito all’estero, alcune lavorazioni o l’intera azienda.'],
+      ['Esternalizzazione', 'Affida alcune fasi della produzione ad altre aziende, chiamate terziste.']
+    ];
+    v.locTabs = LOC.map((o, i) => ({ label: o[0], pick: () => this.setState({ loc: i }), style: tab(s.loc === i) }));
+    v.locText = LOC[s.loc][1];
+
+    const FN = [
+      ['Primarie', '#FFC93C', 'Riguardano le attività tipiche dell’azienda.', [['Produzione', 'Trasforma i beni (industria) o li trasferisce nel tempo e nello spazio (commercio).'], ['Logistica', 'Muove fisicamente merci, materie prime e prodotti finiti.'], ['Marketing', 'Ricerche di mercato, politiche di vendita e comunicazione.'], ['Vendite', 'Cura i rapporti con la rete di vendita e i clienti.']]],
+      ['Di supporto', '#8FB0FF', 'Sostengono le funzioni primarie con risorse e informazioni.', [['Approvvigionamento', 'Sceglie i fornitori e acquista i fattori produttivi.'], ['Risorse umane', 'Seleziona e forma il personale, cura contratti e adempimenti.'], ['Ricerca e sviluppo', 'Progetta nuovi prodotti e nuove tecniche di produzione.']]],
+      ['Infrastrutturali', '#6FDCA6', 'Riguardano tutta la struttura e aiutano le altre funzioni.', [['Direzione generale', 'Fissa obiettivi e strategie.'], ['Finanza', 'Procura i finanziamenti, incassa e paga.'], ['Contabilità e bilancio', 'Registra le operazioni e archivia i dati.'], ['Controllo di gestione', 'Programma e controlla l’andamento dell’attività.'], ['Sostenibilità', 'Coordina le attività sociali e ambientali.']]]
+    ];
+    const f = FN[s.fn];
+    v.fnTabs = FN.map((o, i) => ({ label: 'Funzioni ' + o[0].toLowerCase(), pick: () => this.setState({ fn: i }), style: tab(s.fn === i) }));
+    v.fnHead = 'background: ' + f[1] + '; border-radius: 18px; padding: 14px 18px; font-size: 17px; font-weight: 800';
+    v.fnDesc = f[2];
+    v.fnCards = f[3].map((c, i) => ({ name: c[0], text: c[1], style: 'display: flex; flex-direction: column; gap: 6px; padding: 16px; border-radius: 18px; background: #F4F2FF; border-top: 6px solid ' + f[1] + '; animation-delay: ' + (i * 0.1) + 's' }));
+
+    const ORG = [
+      ['Struttura elementare', 'Titolare', false, ['Unità operativa', 'Unità operativa', 'Unità operativa'], null, 'Tipica delle imprese individuali: solo due livelli, il titolare e le unità operative con i collaboratori.'],
+      ['Struttura funzionale', 'Direttore generale', true, ['Direzione produzione', 'Direzione vendite', 'Direzione amministrazione'], 'Reparto / ufficio', 'Tipica delle imprese medio-grandi: il lavoro è diviso fra le funzioni aziendali.'],
+      ['Struttura divisionale', 'Direzione generale', true, ['Divisione A', 'Divisione B', 'Divisione C'], 'Funzioni e unità operative', 'Tipica delle grandi imprese: ogni divisione è un’unità autonoma, organizzata al suo interno per funzioni.']
+    ];
+    const o = ORG[s.org];
+    const kc = ['#FFC93C', '#8FB0FF', '#6FDCA6'];
+    v.orgTabs = ORG.map((x, i) => ({ label: x[0], pick: () => this.setState({ org: i }), style: tab(s.org === i) }));
+    v.orgTop = o[1]; v.orgStaff = o[2]; v.orgNote = o[5];
+    v.orgKids = o[3].map((m, i) => ({ mid: m, low: o[4] || '', hasLow: !!o[4], style: 'background: ' + kc[i] + '; border-radius: 12px; padding: 10px 12px; font-weight: 800; font-size: 14px; text-align: center; animation-delay: ' + (0.4 + i * 0.12) + 's' }));
+    return v;
+  }
+}
+</script>
+</body>
+</html>

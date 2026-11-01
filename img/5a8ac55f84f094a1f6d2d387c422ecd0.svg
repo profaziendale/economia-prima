@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="94" fill="#FFF4CF"/>
+<path d="M66 72 q-24 40 -14 82 q4 14 18 14 h60 q14 0 18 -14 q10 -42 -14 -82z" fill="#E8C48A" stroke="#1B1640" stroke-width="5" stroke-linejoin="round"/>
+<path d="M66 72 q34 -12 68 0" fill="none" stroke="#1B1640" stroke-width="5"/>
+<path d="M74 64 l-12 -24 M100 60 v-28 M126 64 l12 -24" stroke="#C99A55" stroke-width="7" stroke-linecap="round"/>
+<path d="M74 64 l-12 -24 M100 60 v-28 M126 64 l12 -24" stroke="#1B1640" stroke-width="2" stroke-linecap="round"/>
+<rect x="72" y="104" width="56" height="34" rx="6" fill="#FFFFFF" stroke="#1B1640" stroke-width="4"/>
+<text x="100" y="129" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#1B1640">kg</text>
+</svg>

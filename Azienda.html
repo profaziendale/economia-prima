@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Bisogni e azienda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF6EE;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes flyL{from{opacity:0;transform:translate(-80px,-40px) rotate(-12deg)}to{opacity:1;transform:none}}
+@keyframes flyR{from{opacity:0;transform:translate(80px,-40px) rotate(12deg)}to{opacity:1;transform:none}}
+@keyframes flyBL{from{opacity:0;transform:translate(-80px,40px) rotate(12deg)}to{opacity:1;transform:none}}
+@keyframes flyBR{from{opacity:0;transform:translate(80px,40px) rotate(-12deg)}to{opacity:1;transform:none}}
+@keyframes flow{from{stroke-dashoffset:24}to{stroke-dashoffset:0}}
+@keyframes spinIn{from{opacity:0;transform:rotate(-90deg) scale(.4)}to{opacity:1;transform:none}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.flyL{animation:flyL .7s cubic-bezier(.2,.8,.2,1) both}.flyR{animation:flyR .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.flyBL{animation:flyBL .7s .3s cubic-bezier(.2,.8,.2,1) both}.flyBR{animation:flyBR .7s .45s cubic-bezier(.2,.8,.2,1) both}
+.spinIn{animation:spinIn .8s .7s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes wob{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-6px)}}
+.wob{animation:wob 3.2s ease-in-out infinite}
+.pic{transition:transform .3s}.pic:hover{transform:scale(1.12) rotate(-6deg)}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.chip:hover{transform:translateY(-2px)}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #FFB27A; border-radius: 10px; padding: 4px 10px">08</span>Bisogni e azienda</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #FBE2CC; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #FBE2CC">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Che cos'è un bisogno?</h2>
+        <div class="pop d1" style="background: #FF7A1A; border-radius: 22px; padding: 18px 22px; font-size: clamp(18px, 2.6vw, 24px); font-weight: 800; line-height: 1.4">Il bisogno è la <span style="background: #FFFFFF; padding: 0 8px; border-radius: 8px">necessità di disporre</span> di determinati beni o servizi.</div>
+        <p class="rise d2" style="margin: 0; font-size: 17px; color: #4B4670">Tocca le carte per scoprire i 4 tipi di bisogni.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px">
+          <sc-for list="{{needs}}" as="c" hint-placeholder-count="4">
+            <button type="button" class="chip rise" style="{{c.style}}" onClick="{{c.flip}}">
+              <img data-dc-src="{{c.img}}" alt="{{c.alt}}" class="wob" style="width: 104px; height: 104px; align-self: center; animation-delay: {{c.delay}}">
+              <span style="font-size: 22px; font-weight: 900">{{c.title}}</span>
+              <sc-if value="{{c.open}}" hint-placeholder-val="{{ false }}">
+                <span class="pop" style="font-size: 15px; font-weight: 600; line-height: 1.45">{{c.text}}</span>
+                <span class="pop d1" style="font-size: 14px; font-weight: 800; background: rgba(255,255,255,.7); padding: 8px 10px; border-radius: 10px">Es.: {{c.ex}}</span>
+              </sc-if>
+              <sc-if value="{{c.closed}}" hint-placeholder-val="{{ true }}">
+                <span style="font-size: 14px; font-weight: 700">Tocca per girare →</span>
+              </sc-if>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Gioco: che bisogno è?</h2>
+          <span class="pop" style="background: #FFB27A; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{gScore}} / {{gTotal}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px">
+          <sc-for list="{{game}}" as="g" hint-placeholder-count="8">
+            <div class="rise" style="{{g.box}}">
+              <div style="display: flex; align-items: center; gap: 14px">
+                <img data-dc-src="{{g.img}}" alt="" class="pic" style="width: 72px; height: 72px; flex: 0 0 auto">
+                <span style="font-weight: 800; font-size: 17px">{{g.text}}</span>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="2">
+                  <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Come si soddisfano i bisogni? L'attività economica</h2>
+        <p class="rise d1" style="margin: 0; font-size: 17px; line-height: 1.5; color: #4B4670">L'<strong style="color: #1B1640">attività economica</strong> è l'attività dell'uomo per soddisfare i propri bisogni con <strong style="color: #1B1640">beni</strong> (oggetti materiali: pane, scarpe) e <strong style="color: #1B1640">servizi</strong> (prestazioni: lezione, viaggio in treno). Tocca le fasi.</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px">
+          <sc-for list="{{phases}}" as="p" hint-placeholder-count="5">
+            <button type="button" class="chip pop" style="{{p.style}}" onClick="{{p.pick}}">{{p.label}}</button>
+            <sc-if value="{{p.arrow}}" hint-placeholder-val="{{ true }}">
+              <svg aria-hidden="true" width="40" height="20" viewBox="0 0 40 20"><path d="M2 10h30M26 4l8 6-8 6" fill="none" stroke="#1B1640" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6" style="animation: flow 1s linear infinite"></path></svg>
+            </sc-if>
+          </sc-for>
+        </div>
+        <div class="pop" style="{{phaseBox}}">
+          <img data-dc-src="{{phaseImg}}" alt="" class="wob" style="width: 124px; height: 124px; flex: 0 0 auto">
+          <div style="display: flex; flex-direction: column; gap: 8px; flex: 1 1 260px">
+            <span style="font-size: 26px; font-weight: 900">{{phaseTitle}}</span>
+            <span style="font-size: 17px; line-height: 1.5">{{phaseText}}</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">L'azienda</h2>
+        <div class="pop d1" style="background: #FFE9D6; border-radius: 20px; padding: 16px 20px; font-size: 17px; line-height: 1.5">È un'<strong>organizzazione di beni e persone</strong>, destinata a <strong>durare nel tempo</strong>, che svolge un'attività economica di <strong>produzione e/o consumo</strong> di beni e servizi per <strong>soddisfare i bisogni</strong> umani.</div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <sc-for list="{{azTabs}}" as="t" hint-placeholder-count="2">
+            <button type="button" class="chip" style="{{t.style}}" onClick="{{t.pick}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{showCons}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-wrap: wrap; gap: 16px">
+            <div class="pop" style="flex: 1 1 320px; background: #FFC93C; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+              <img src="img/e955d50771a17de8dbc7a207e0276fc3.svg" alt="Una casa" class="wob" style="width: 96px; height: 96px">
+              <span style="font-size: 24px; font-weight: 900">Aziende di consumo: le famiglie</span>
+              <span style="font-size: 16px; line-height: 1.5">La famiglia usa (consuma) beni e servizi per soddisfare i bisogni dei suoi componenti: cibo, casa, vestiti, scuola, svago.</span>
+              <span style="font-size: 16px; line-height: 1.5">Svolge anche una <strong>produzione</strong>: lavora e ottiene un reddito, che poi spende o risparmia.</span>
+            </div>
+            <div class="pop d2" style="flex: 1 1 320px; background: #FFF4CF; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+              <span style="font-size: 20px; font-weight: 900">Le amministrazioni pubbliche e il terzo settore</span>
+              <span style="font-size: 16px; line-height: 1.5"><strong>Amministrazioni pubbliche</strong> (Stato, Regioni, Comuni): soddisfano i bisogni della collettività.</span>
+              <span style="font-size: 16px; line-height: 1.5"><strong>Enti del terzo settore</strong>: attività di utilità sociale <em>senza scopo di profitto</em> (associazioni di volontariato…).</span>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{showProd}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-wrap: wrap; gap: 16px">
+            <div class="pop" style="flex: 1 1 320px; background: #FF7A1A; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+              <img src="img/cfecd3f971f0538319b9d0d02c439c03.svg" alt="Una fabbrica" class="wob" style="width: 96px; height: 96px">
+              <span style="font-size: 24px; font-weight: 900">Aziende di produzione: le imprese</span>
+              <span style="font-size: 16px; line-height: 1.5">Producono beni e servizi da vendere sul mercato per ottenere un <strong>profitto</strong>.</span>
+            </div>
+            <div class="pop d1" style="flex: 1 1 260px; background: #FFE9D6; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 18px; font-weight: 900">Produzione diretta</span>
+              <span style="font-size: 15px; line-height: 1.5">Trasformano fisicamente le materie prime, assemblano parti o prestano servizi. <em>Es.: pastificio, fabbrica di auto.</em></span>
+            </div>
+            <div class="pop d2" style="flex: 1 1 260px; background: #FFE9D6; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 18px; font-weight: 900">Produzione indiretta</span>
+              <span style="font-size: 15px; line-height: 1.5">Trasferiscono i beni dal luogo di produzione a quello di consumo e li conservano in magazzino. <em>Es.: supermercato.</em></span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Gli elementi costitutivi dell'azienda di produzione</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; color: #4B4670">Quattro pezzi che si incastrano. Tocca ogni pezzo.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
+          <div style="flex: 0 1 380px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; aspect-ratio: 1 / 1; max-width: 380px; width: 100%">
+            <button type="button" class="chip flyL" style="{{el0}}" onClick="{{pick0}}">PERSONE</button>
+            <button type="button" class="chip flyR" style="{{el1}}" onClick="{{pick1}}">BENI</button>
+            <button type="button" class="chip flyBL" style="{{el2}}" onClick="{{pick2}}">ORGANIZZAZIONE</button>
+            <button type="button" class="chip flyBR" style="{{el3}}" onClick="{{pick3}}">SCOPO</button>
+            <span class="spinIn" style="position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: #1B1640; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16px; border: 6px solid #FFFFFF; pointer-events: none">AZIENDA</span>
+          </div>
+          <div class="pop" style="{{elBox}}">
+            <img data-dc-src="{{elImg}}" alt="" class="wob" style="width: 104px; height: 104px">
+            <span style="font-size: 24px; font-weight: 900">{{elTitle}}</span>
+            <sc-for list="{{elLines}}" as="l" hint-placeholder-count="3">
+              <span class="rise" style="font-size: 16px; line-height: 1.5; display: flex; gap: 8px"><span style="font-weight: 900">→</span><span>{{l}}</span></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">I settori: in quale settore lavora?</h2>
+          <span class="pop" style="background: #FFB27A; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{sScore}} / {{sTotal}}</span>
+        </div>
+        <div class="rise d1" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+          <div style="background: #DDF7EA; border-radius: 14px; padding: 12px; font-size: 14px; display: flex; align-items: center; gap: 10px"><img src="img/8b76522c63bd1ab85e812b67b8992ae6.svg" alt="" class="pic" style="width: 60px; height: 60px; flex: 0 0 auto"><span><strong>Agricole</strong>: coltivano, allevano, curano i boschi</span></div>
+          <div style="background: #E3EAFF; border-radius: 14px; padding: 12px; font-size: 14px; display: flex; align-items: center; gap: 10px"><img src="img/cfecd3f971f0538319b9d0d02c439c03.svg" alt="" class="pic" style="width: 60px; height: 60px; flex: 0 0 auto"><span><strong>Industriali</strong>: trasformano materie prime o assemblano</span></div>
+          <div style="background: #FFF4CF; border-radius: 14px; padding: 12px; font-size: 14px; display: flex; align-items: center; gap: 10px"><img src="img/4b84cc1db3c2a154cbf8f5ee748e3539.svg" alt="" class="pic" style="width: 60px; height: 60px; flex: 0 0 auto"><span><strong>Commerciali</strong>: vendono merci senza trasformarle</span></div>
+          <div style="background: #FFE0EB; border-radius: 14px; padding: 12px; font-size: 14px; display: flex; align-items: center; gap: 10px"><img src="img/438284234d3fa2c0989e2a88311a8d38.svg" alt="" class="pic" style="width: 60px; height: 60px; flex: 0 0 auto"><span><strong>Servizi</strong>: offrono prestazioni immateriali</span></div>
+        </div>
+        <sc-for list="{{sect}}" as="g" hint-placeholder-count="8">
+          <div class="rise" style="{{g.box}}">
+            <span style="font-weight: 800; font-size: 17px; flex: 1 1 220px">{{g.text}}</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="4">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Sostenibile.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, open: {}, g: {}, phase: 0, az: 'cons', el: 0, sect: {} };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Il bisogno', 'Gioco bisogni', 'Attività economica', 'L’azienda', 'Elementi', 'Settori'];
+    const N = titles.length;
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #FF7A1A; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const optStyle = (state) => 'border: 3px solid ' + (state === 'ok' ? '#0B6B41' : state === 'ko' ? '#A3164B' : '#1B1640') + '; background: ' + (state === 'ok' ? '#6FDCA6' : state === 'ko' ? '#FF8FB4' : '#FFFFFF') + '; color: #1B1640; border-radius: 12px; padding: 8px 14px; min-height: 44px; font-weight: 800; font-size: 14px';
+
+    const needs = [
+      { t: 'Primari', x: 'Devono essere soddisfatti per sopravvivere.', e: 'mangiare, bere, curarsi, avere una casa', c: '#FF7A1A', img: '/_blob/48f035cbb82ba511b888083095bd1c21', alt: 'Una bottiglia d’acqua' },
+      { t: 'Secondari', x: 'Riguardano la qualità della vita: si sentono dopo i primari e dipendono dalla società in cui si vive.', e: 'smartphone, vacanze, concerti', c: '#FFC93C', img: '/_blob/45ff2a00b4e16317401f95f040c294a0', alt: 'Un ombrellone al mare' },
+      { t: 'Individuali', x: 'Li avverte ogni persona come singolo. Possono essere primari o secondari.', e: 'un paio di scarpe, uno smartphone', c: '#8FB0FF', img: '/_blob/c0007cb5a8244445bc377a9ff5fae3c6', alt: 'Uno smartphone' },
+      { t: 'Collettivi', x: 'Nascono dal vivere in una comunità organizzata.', e: 'scuola pubblica, illuminazione delle strade, sicurezza', c: '#6FDCA6', img: '/_blob/e312ef26ca8dd2d934a56aeb4cffed4f', alt: 'Una scuola' }
+    ];
+    v.needs = needs.map((n, i) => {
+      const open = !!s.open[i];
+      return { title: n.t, text: n.x, ex: n.e, open, closed: !open, img: n.img, alt: n.alt, delay: (-i * 0.8) + 's', flip: () => this.setState({ open: Object.assign({}, s.open, { [i]: !open }) }),
+        style: 'border: 0; text-align: left; display: flex; flex-direction: column; gap: 10px; min-height: 190px; padding: 20px; border-radius: 22px; color: #1B1640; background: ' + n.c + '; animation-delay: ' + (i * 0.1) + 's; transform: ' + (open ? 'rotate(-1deg)' : 'none') };
+    });
+
+    const G = [
+      ['Mangiare quando hai fame', ['Primario', 'Secondario'], 0, '6c93441132b930cc3c62cd08ad84501e'],
+      ['Comprare l’ultimo videogioco', ['Primario', 'Secondario'], 1, '306bf3cc8daea79e83e29a8c34d79ca0'],
+      ['Curarsi quando si è malati', ['Primario', 'Secondario'], 0, '37f42f8f2f87d08ef8a16e069864864a'],
+      ['Andare a un concerto', ['Primario', 'Secondario'], 1, '770e4087a88d3947e2bb864d8b994b5f'],
+      ['L’illuminazione delle strade', ['Individuale', 'Collettivo'], 1, '31b3f92806226f8416d1dbe9a729a6b7'],
+      ['Un paio di scarpe da ginnastica', ['Individuale', 'Collettivo'], 0, 'fbde6aecc966937e7019d42768219ea8'],
+      ['La sicurezza garantita dalla polizia', ['Individuale', 'Collettivo'], 1, 'aa99dd0ecc4b662e54381d5514a23a05'],
+      ['Avere una casa in cui vivere', ['Individuale', 'Collettivo'], 0, 'e955d50771a17de8dbc7a207e0276fc3']
+    ];
+    let gScore = 0;
+    v.game = G.map((g, i) => {
+      const pick = s.g[i];
+      if (pick === g[2]) gScore++;
+      return {
+        text: g[0], img: '/_blob/' + g[3],
+        box: 'display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border-radius: 18px; background: ' + (pick == null ? '#FFF6EE' : pick === g[2] ? '#DDF7EA' : '#FFE0EB') + '; animation-delay: ' + (i * 0.05) + 's',
+        opts: g[1].map((lab, oi) => ({ label: lab, pick: () => this.setState({ g: Object.assign({}, s.g, { [i]: oi }) }), style: optStyle(pick == null ? '' : oi === g[2] ? 'ok' : oi === pick ? 'ko' : '') }))
+      };
+    });
+    v.gScore = gScore; v.gTotal = G.length;
+
+    const PH = [
+      ['Produzione', 'Si crea nuovo valore: si ottengono beni e servizi (coltivare il grano, fare il pane).', '#FF7A1A'],
+      ['Scambio', 'Beni e servizi passano da chi li produce a chi li usa, in cambio di denaro.', '#FFC93C'],
+      ['Consumo', 'Si usano beni e servizi per soddisfare un bisogno: immediato (oggi) o futuro.', '#8FB0FF'],
+      ['Risparmio', 'Il reddito non consumato subito viene messo da parte per il futuro.', '#6FDCA6'],
+      ['Investimento', 'Si acquistano beni destinati all’attività di produzione (un forno nuovo per il panificio).', '#B9A6FF']
+    ];
+    v.phases = PH.map((p, i) => ({ label: p[0], arrow: i < PH.length - 1, pick: () => this.setState({ phase: i }),
+      style: 'border: 3px solid #1B1640; border-radius: 16px; padding: 12px 18px; min-height: 48px; font-weight: 900; font-size: 16px; color: #1B1640; animation-delay: ' + (i * 0.12) + 's; background: ' + (s.phase === i ? p[2] : '#FFFFFF') + '; transform: ' + (s.phase === i ? 'scale(1.08)' : 'none') }));
+    v.phaseTitle = PH[s.phase][0]; v.phaseText = PH[s.phase][1];
+    const PHI = ['cfecd3f971f0538319b9d0d02c439c03', '4b84cc1db3c2a154cbf8f5ee748e3539', '6c93441132b930cc3c62cd08ad84501e', 'c54c9856decd36f0d701f047e40c5f76', '16ee53dbe1940cf2cfdef356f0034c2a'];
+    v.phaseImg = '/_blob/' + PHI[s.phase];
+    v.phaseBox = 'display: flex; flex-wrap: wrap; align-items: center; gap: 20px; padding: 22px; border-radius: 22px; background: ' + PH[s.phase][2];
+
+    v.azTabs = [['cons', 'Aziende di consumo'], ['prod', 'Aziende di produzione']].map((t) => ({ label: t[1], pick: () => this.setState({ az: t[0] }), style: 'border: 3px solid #1B1640; border-radius: 12px; padding: 10px 16px; min-height: 44px; font-weight: 800; font-size: 15px; ' + (s.az === t[0] ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    v.showCons = s.az === 'cons'; v.showProd = s.az === 'prod';
+
+    const EL = [
+      ['Persone', '#FF7A1A', ['L’imprenditore, che ha creato l’azienda.', 'I collaboratori dipendenti, che lavorano secondo i tempi e i modi indicati dall’imprenditore.']],
+      ['Beni', '#FFC93C', ['L’insieme dei beni forma il PATRIMONIO.', 'Beni durevoli, usati più volte: fabbricati, macchinari, automezzi, computer.', 'Beni di breve durata, venduti o consumati subito: merci, materie prime, prodotti.']],
+      ['Organizzazione', '#8FB0FF', ['L’azienda dura nel tempo: non fa attività occasionali.', 'Bisogna decidere risorse, tempi di lavoro, compiti delle persone.', 'E i rapporti fra le persone dentro l’azienda.']],
+      ['Scopo', '#6FDCA6', ['Creare nuova ricchezza.', 'Profitto per l’imprenditore (compenso per lavoro e capitale).', 'Retribuzione per i collaboratori dipendenti.']]
+    ];
+    const elSt = (i, r) => 'border: 0; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(13px, 1.8vw, 17px); color: #1B1640; min-height: 44px; background: ' + EL[i][1] + '; border-radius: ' + r + '; transform: ' + (s.el === i ? 'scale(1.04)' : 'scale(.97)') + '; box-shadow: ' + (s.el === i ? '0 0 0 5px #1B1640' : 'none');
+    v.el0 = elSt(0, '120px 20px 20px 20px'); v.el1 = elSt(1, '20px 120px 20px 20px'); v.el2 = elSt(2, '20px 20px 20px 120px'); v.el3 = elSt(3, '20px 20px 120px 20px');
+    v.pick0 = () => this.setState({ el: 0 }); v.pick1 = () => this.setState({ el: 1 }); v.pick2 = () => this.setState({ el: 2 }); v.pick3 = () => this.setState({ el: 3 });
+    v.elTitle = EL[s.el][0]; v.elLines = EL[s.el][2];
+    v.elImg = '/_blob/' + ['2fc789515b8983bfa7f7c30f079c241b', '31727bc2797360e1a439db41b8f29354', '16ee53dbe1940cf2cfdef356f0034c2a', '01216f91f27de5c1c18587ffb1a968c6'][s.el];
+    v.elBox = 'flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 22px; background: ' + EL[s.el][1];
+
+    const cats = ['Agricola', 'Industriale', 'Commerciale', 'Servizi'];
+    const SC = [['Un pastificio', 1], ['Un supermercato', 2], ['Una banca', 3], ['Un allevamento di mucche da latte', 0], ['Un calzaturificio', 1], ['Un’agenzia di viaggi', 3], ['Un grossista di frutta che vende ai negozi', 2], ['Un agriturismo con vigneto', 0]];
+    let sScore = 0;
+    v.sect = SC.map((g, i) => {
+      const pick = s.sect[i];
+      if (pick === g[1]) sScore++;
+      return {
+        text: g[0],
+        box: 'display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px; background: ' + (pick == null ? '#FFF6EE' : pick === g[1] ? '#DDF7EA' : '#FFE0EB') + '; animation-delay: ' + (i * 0.05) + 's',
+        opts: cats.map((lab, oi) => ({ label: lab, pick: () => this.setState({ sect: Object.assign({}, s.sect, { [i]: oi }) }), style: optStyle(pick == null ? '' : oi === g[1] ? 'ok' : oi === pick ? 'ko' : '') }))
+      };
+    });
+    v.sScore = sScore; v.sTotal = SC.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>

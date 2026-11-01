@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Misure, pesi e valori</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2FF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.growY{animation:growY .8s cubic-bezier(.2,.8,.2,1) both;transform-origin:bottom}
+.nudge{animation:nudge 1.2s ease-in-out infinite}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}.d7{animation-delay:.84s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .2s}
+.inp{font-family:inherit;font-size:22px;font-weight:800;padding:10px 14px;border:3px solid #D9D3FA;border-radius:14px;width:100%;box-sizing:border-box;color:#1B1640;background:#FFFFFF}
+.inp:focus{outline:none;border-color:#1B1640}
+.bar{transition:height .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1)}
+input[type=range]{width:100%;accent-color:#1B1640;height:28px}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #FFC93C; border-radius: 10px; padding: 4px 10px">01</span>Misure, pesi e valori</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #E2DDFB; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="5">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #E2DDFB">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">La scala delle misure di peso</h2>
+        <p class="rise d1" style="margin: 0; font-size: 18px; line-height: 1.5; color: #4B4670; max-width: 760px">Ogni gradino vale <strong style="color: #1B1640">10 volte</strong> quello sotto. Scendi la scala? Moltiplichi per 10. Sali? Dividi per 10.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end">
+          <div style="display: flex; align-items: flex-end; gap: 6px; flex: 1 1 560px; overflow-x: auto; padding-bottom: 6px">
+            <sc-for list="{{ladder}}" as="u" hint-placeholder-count="7">
+              <div class="pop" style="{{u.style}}">
+                <span style="font-size: 26px; font-weight: 900">{{u.sym}}</span>
+                <span style="font-size: 12px; font-weight: 600">{{u.name}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div class="rise d5" style="display: flex; flex-direction: column; gap: 10px; flex: 0 1 260px">
+            <div style="display: flex; align-items: center; gap: 10px; background: #DDF7EA; padding: 12px 16px; border-radius: 16px; font-weight: 700"><span class="nudge" style="font-size: 22px">↘</span>scendi: × 10</div>
+            <div style="display: flex; align-items: center; gap: 10px; background: #FFE0EB; padding: 12px 16px; border-radius: 16px; font-weight: 700"><span style="font-size: 22px">↗</span>sali: ÷ 10</div>
+            <div style="background: #FFF4CF; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.4"><strong>Esempio:</strong> 3 kg = 30 hg = 300 dag = 3.000 g</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px">
+          <div class="rise d6" style="background: #E3EAFF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-weight: 800">Lunghezza (metro)</span>
+            <span style="font-size: 15px; color: #4B4670">km · hm · dam · <strong style="color: #1B1640">m</strong> · dm · cm · mm</span>
+          </div>
+          <div class="rise d7" style="background: #ECE6FF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-weight: 800">Capacità (litro)</span>
+            <span style="font-size: 15px; color: #4B4670">hl · dal · <strong style="color: #1B1640">l</strong> · dl · cl · ml</span>
+          </div>
+          <div class="rise d7" style="background: #DDF7EA; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px">
+            <span style="font-weight: 800">Valore (euro €)</span>
+            <span style="font-size: 15px; color: #4B4670">Sempre con 2 decimali: 12,50 €</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Chilogrammi, quintali e tonnellate</h2>
+        <div class="rise d1" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: clamp(18px, 2.6vw, 26px); font-weight: 900">
+          <span style="background: #FFC93C; padding: 10px 18px; border-radius: 16px">1 t</span>
+          <span>=</span>
+          <span style="background: #8FB0FF; padding: 10px 18px; border-radius: 16px">10 q</span>
+          <span>=</span>
+          <span style="background: #6FDCA6; padding: 10px 18px; border-radius: 16px">1.000 kg</span>
+          <span style="font-size: 16px; font-weight: 600; color: #4B4670">e quindi 1 q = 100 kg</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px">
+          <div class="rise d2" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; background: #F4F2FF; border-radius: 22px; padding: 20px">
+            <label style="display: flex; flex-direction: column; gap: 8px; font-weight: 700">Scrivi una quantità
+              <input class="inp" type="text" inputmode="decimal" value="{{conv}}" onChange="{{setConv}}">
+            </label>
+            <span style="font-weight: 700">È espressa in…</span>
+            <div style="display: flex; gap: 10px">
+              <sc-for list="{{units}}" as="u" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{u.style}}" onClick="{{u.pick}}">{{u.label}}</button>
+              </sc-for>
+            </div>
+            <div style="background: #FFFFFF; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.6">
+              <strong>Regole del passaggio da {{unitName}}:</strong>
+              <sc-for list="{{rules}}" as="r" hint-placeholder-count="2"><div>→ {{r}}</div></sc-for>
+            </div>
+          </div>
+          <div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 12px">
+            <sc-for list="{{convOut}}" as="o" hint-placeholder-count="3">
+              <div class="rise" style="{{o.style}}">
+                <span style="font-weight: 700; font-size: 15px">{{o.name}}</span>
+                <span style="font-size: clamp(26px, 4vw, 40px); font-weight: 900">{{o.val}} <span style="font-size: 20px">{{o.sym}}</span></span>
+              </div>
+            </sc-for>
+            <div style="font-size: 14px; color: #4B4670">Trucco: dividere per 100 = spostare la virgola di 2 posti a sinistra.</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Peso lordo, peso netto e tara</h2>
+        <p class="rise d1" style="margin: 0; font-size: 18px; line-height: 1.5; color: #4B4670; max-width: 780px">Il <strong style="color: #0B6B41">netto</strong> è la merce, la <strong style="color: #B4500A">tara</strong> è l'imballaggio (vasetto, scatola, cassetta), il <strong style="color: #1B1640">lordo</strong> è tutto insieme sulla bilancia.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end">
+          <div class="rise d2" style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px">
+            <div style="width: 170px; height: 280px; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 20px 20px 26px 26px; overflow: hidden; border: 4px solid #1B1640; background: #FFFFFF">
+              <div class="bar" style="{{taraStyle}}"><span style="font-weight: 800; font-size: 14px">tara {{tara}} g</span></div>
+              <div class="bar growY" style="{{nettoStyle}}"><span style="font-weight: 800; font-size: 16px">netto {{netto}} g</span></div>
+            </div>
+            <div style="width: 210px; height: 16px; background: #1B1640; border-radius: 8px"></div>
+            <div style="background: #1B1640; color: #FFFFFF; font-weight: 900; font-size: 22px; padding: 8px 18px; border-radius: 12px">lordo {{lordo}} g</div>
+          </div>
+          <div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 16px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Peso netto (olive): {{netto}} g
+              <input type="range" min="20" max="500" step="10" value="{{netto}}" onChange="{{setNetto}}">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Tara (vasetto): {{tara}} g
+              <input type="range" min="10" max="200" step="5" value="{{tara}}" onChange="{{setTara}}">
+            </label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+              <div class="pop d3" style="background: #1B1640; color: #FFFFFF; border-radius: 16px; padding: 14px"><div style="font-weight: 800">Lordo = Netto + Tara</div><div style="font-size: 18px; margin-top: 4px">{{lordo}} = {{netto}} + {{tara}}</div></div>
+              <div class="pop d4" style="background: #DDF7EA; border-radius: 16px; padding: 14px"><div style="font-weight: 800">Netto = Lordo − Tara</div><div style="font-size: 18px; margin-top: 4px">{{netto}} = {{lordo}} − {{tara}}</div></div>
+              <div class="pop d5" style="background: #FFE9D6; border-radius: 16px; padding: 14px"><div style="font-weight: 800">Tara = Lordo − Netto</div><div style="font-size: 18px; margin-top: 4px">{{tara}} = {{lordo}} − {{netto}}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Ricavo, costo e guadagno</h2>
+        <div class="rise d1" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+          <div style="background: #FFE0EB; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.45"><strong>Costo</strong>: quello che l'azienda <em>spende</em> per comprare beni e servizi.</div>
+          <div style="background: #E3EAFF; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.45"><strong>Ricavo</strong>: quello che l'azienda <em>incassa</em> vendendo beni e servizi.</div>
+          <div style="background: #DDF7EA; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.45"><strong>Utile (guadagno)</strong> se ricavo &gt; costo. <strong>Perdita</strong> se costo &gt; ricavo.</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end">
+          <div style="flex: 0 0 auto; display: flex; gap: 18px; align-items: flex-end; height: 300px; padding: 0 10px; border-bottom: 4px solid #1B1640">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; justify-content: flex-end; height: 100%">
+              <span style="font-weight: 800">{{costoTxt}}</span>
+              <div class="bar growY" style="{{costoBar}}"></div>
+              <span style="font-weight: 700; font-size: 14px">Costo</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; justify-content: flex-end; height: 100%">
+              <span style="font-weight: 800">{{ricavoTxt}}</span>
+              <div class="bar growY d1" style="{{ricavoBar}}"></div>
+              <span style="font-weight: 700; font-size: 14px">Ricavo</span>
+            </div>
+          </div>
+          <div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 16px">
+            <p style="margin: 0; font-size: 16px; color: #4B4670">Un frigorifero comprato a 620 € e rivenduto a 840 €. Muovi i cursori!</p>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Costo d'acquisto: {{costoTxt}}
+              <input type="range" min="0" max="1500" step="10" value="{{costo}}" onChange="{{setCosto}}">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Ricavo di vendita: {{ricavoTxt}}
+              <input type="range" min="0" max="1500" step="10" value="{{ricavo}}" onChange="{{setRicavo}}">
+            </label>
+            <div class="pop" style="{{esitoStyle}}">
+              <span style="font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em">{{esito}}</span>
+              <span style="font-size: clamp(22px, 3.4vw, 32px); font-weight: 900">{{esitoFormula}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Prova tu!</h2>
+          <span class="pop" style="background: #FFC93C; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{score}} / {{qTotal}}</span>
+        </div>
+        <sc-for list="{{quiz}}" as="q" hint-placeholder-count="5">
+          <div class="rise" style="background: #F4F2FF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+            <span style="font-weight: 800; font-size: 17px; line-height: 1.4">{{q.n}}. {{q.text}}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{q.answered}}" hint-placeholder-val="{{ false }}">
+              <span class="pop" style="{{q.fbStyle}}">{{q.fb}}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Proporzioni.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, conv: '250', unit: 'kg', netto: 220, tara: 80, costo: 620, ricavo: 840, ans: {} };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Scala dei pesi', 'kg, q e t', 'Lordo, netto, tara', 'Ricavo e costo', 'Prova tu'];
+    const N = titles.length;
+    const fmt = (n, d) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { maximumFractionDigits: d == null ? 3 : d });
+    const eur = (n) => n.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #FFC93C; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+
+    const lad = [['kg', 'chilogrammo'], ['hg', 'ettogrammo'], ['dag', 'decagrammo'], ['g', 'grammo'], ['dg', 'decigrammo'], ['cg', 'centigrammo'], ['mg', 'milligrammo']];
+    const ladCol = ['#FFC93C', '#FFD45E', '#FFDE80', '#8FB0FF', '#A9C2FF', '#C3D5FF', '#DCE6FF'];
+    v.ladder = lad.map((u, i) => ({ sym: u[0], name: u[1], style: 'flex: 0 0 auto; width: 88px; height: ' + (220 - i * 24) + 'px; background: ' + ladCol[i] + '; border-radius: 16px 16px 6px 6px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 14px; box-sizing: border-box; gap: 2px; animation-delay: ' + (i * 0.1) + 's' }));
+
+    const a = parseFloat(String(s.conv).replace(',', '.'));
+    const kg = s.unit === 'kg' ? a : s.unit === 'q' ? a * 100 : a * 1000;
+    const out = [['tonnellate', 't', kg / 1000, '#FFC93C'], ['quintali', 'q', kg / 100, '#8FB0FF'], ['chilogrammi', 'kg', kg, '#6FDCA6']];
+    v.convOut = out.map((o) => ({ name: o[0], sym: o[1], val: fmt(o[2]), style: 'display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; border-radius: 20px; transition: all .3s; background: ' + o[3] + '; ' + (o[1] === s.unit ? 'outline: 4px solid #1B1640; outline-offset: 3px' : 'opacity: .92') }));
+    v.conv = s.conv;
+    v.setConv = (e) => this.setState({ conv: e.target.value });
+    v.units = [['kg', 'kg'], ['q', 'quintali'], ['t', 'tonnellate']].map((u) => ({ label: u[1], pick: () => this.setState({ unit: u[0] }), style: 'border: 3px solid #1B1640; border-radius: 12px; padding: 10px 14px; min-height: 44px; font-weight: 800; font-size: 15px; ' + (s.unit === u[0] ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    v.unitName = { kg: 'chilogrammi', q: 'quintali', t: 'tonnellate' }[s.unit];
+    v.rules = { kg: ['kg → q: dividi per 100', 'kg → t: dividi per 1.000'], q: ['q → kg: moltiplica per 100', 'q → t: dividi per 10'], t: ['t → q: moltiplica per 10', 't → kg: moltiplica per 1.000'] }[s.unit];
+
+    const lordo = s.netto + s.tara;
+    const maxH = 260;
+    v.netto = s.netto; v.tara = s.tara; v.lordo = lordo;
+    v.nettoStyle = 'height: ' + (s.netto / 700 * maxH + 30) + 'px; background: #6FDCA6; display: flex; align-items: center; justify-content: center; transform-origin: bottom';
+    v.taraStyle = 'height: ' + (s.tara / 700 * maxH + 26) + 'px; background: repeating-linear-gradient(45deg, #FFB27A 0 10px, #FFC79C 10px 20px); display: flex; align-items: center; justify-content: center';
+    v.setNetto = (e) => this.setState({ netto: +e.target.value });
+    v.setTara = (e) => this.setState({ tara: +e.target.value });
+
+    const diff = s.ricavo - s.costo;
+    v.costo = s.costo; v.ricavo = s.ricavo;
+    v.costoTxt = eur(s.costo); v.ricavoTxt = eur(s.ricavo);
+    v.costoBar = 'width: 90px; border-radius: 12px 12px 0 0; background: #FF8FB4; transform-origin: bottom; height: ' + Math.max(4, s.costo / 1500 * 240) + 'px';
+    v.ricavoBar = 'width: 90px; border-radius: 12px 12px 0 0; background: #8FB0FF; transform-origin: bottom; height: ' + Math.max(4, s.ricavo / 1500 * 240) + 'px';
+    v.setCosto = (e) => this.setState({ costo: +e.target.value });
+    v.setRicavo = (e) => this.setState({ ricavo: +e.target.value });
+    if (diff > 0) { v.esito = 'Utile'; v.esitoFormula = eur(s.ricavo) + ' − ' + eur(s.costo) + ' = ' + eur(diff); }
+    else if (diff < 0) { v.esito = 'Perdita'; v.esitoFormula = eur(s.costo) + ' − ' + eur(s.ricavo) + ' = ' + eur(-diff); }
+    else { v.esito = 'Pareggio'; v.esitoFormula = 'Ricavo = Costo: né utile né perdita'; }
+    v.esitoStyle = 'display: flex; flex-direction: column; gap: 4px; padding: 18px 20px; border-radius: 20px; ' + (diff > 0 ? 'background: #6FDCA6' : diff < 0 ? 'background: #FF8FB4' : 'background: #FFF4CF');
+
+    const Q = [
+      { text: '18 t = … kg', o: ['1.800', '18.000', '1,80'], c: 1, why: '1 t = 1.000 kg → 18 × 1.000 = 18.000 kg' },
+      { text: '2,5 q = … kg', o: ['25', '250', '2.500'], c: 1, why: '1 q = 100 kg → 2,5 × 100 = 250 kg' },
+      { text: 'Un vasetto di olive pesa 300 g. Il contenitore pesa 80 g. Quanto pesano le olive?', o: ['280 g', '220 g', '380 g'], c: 1, why: 'Netto = Lordo − Tara = 300 − 80 = 220 g' },
+      { text: 'Porzioni di formaggio da 2 hg in vaschette da 8 g. Qual è il peso lordo di una vaschetta?', o: ['208 g', '192 g', '20,8 g'], c: 0, why: '2 hg = 200 g · Lordo = 200 + 8 = 208 g' },
+      { text: 'Un televisore è venduto a 1.200 € con un utile di 280 €. Quanto era costato?', o: ['920 €', '1.480 €', '1.020 €'], c: 0, why: 'Costo = Ricavo − Utile = 1.200 − 280 = 920 €' }
+    ];
+    let score = 0;
+    v.quiz = Q.map((q, qi) => {
+      const pick = s.ans[qi];
+      const answered = pick != null;
+      if (pick === q.c) score++;
+      return {
+        n: qi + 1, text: q.text, answered,
+        fb: pick === q.c ? 'Esatto! ' + q.why : 'Non proprio. ' + q.why,
+        fbStyle: 'font-weight: 700; font-size: 15px; padding: 10px 14px; border-radius: 12px; ' + (pick === q.c ? 'background: #DDF7EA; color: #0B6B41' : 'background: #FFE0EB; color: #A3164B'),
+        opts: q.o.map((lab, oi) => {
+          let bg = '#FFFFFF', bd = '#D9D3FA';
+          if (answered && oi === q.c) { bg = '#6FDCA6'; bd = '#0B6B41'; }
+          else if (answered && oi === pick) { bg = '#FF8FB4'; bd = '#A3164B'; }
+          return { label: lab, pick: () => this.setState({ ans: Object.assign({}, s.ans, { [qi]: oi }) }), style: 'border: 3px solid ' + bd + '; background: ' + bg + '; color: #1B1640; border-radius: 14px; padding: 10px 18px; min-height: 44px; font-weight: 800; font-size: 16px' };
+        })
+      };
+    });
+    v.score = score; v.qTotal = Q.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>

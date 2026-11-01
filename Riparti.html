@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Riparti proporzionali</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2FF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drop{0%{opacity:0;transform:translateY(-40px)}70%{transform:translateY(4px)}100%{opacity:1;transform:none}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.growX{animation:growX .9s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}
+.drop{animation:drop .6s cubic-bezier(.2,.8,.2,1) both}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.inp{font-family:inherit;font-size:18px;font-weight:800;padding:8px 10px;border:3px solid #D9D3FA;border-radius:12px;width:100%;box-sizing:border-box;color:#1B1640;background:#FFFFFF;min-height:44px}
+.inp:focus{outline:none;border-color:#1B1640}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #6FDCA6; border-radius: 10px; padding: 4px 10px">06</span>Riparti proporzionali</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #E2DDFB; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #E2DDFB">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Dividere in parti… giuste!</h2>
+        <p class="rise d1" style="margin: 0; font-size: 18px; line-height: 1.5; color: #4B4670; max-width: 820px">Il <strong style="color: #1B1640">riparto proporzionale diretto</strong> divide un importo in parti <strong style="color: #1B1640">direttamente proporzionali</strong> a delle grandezze: chi ha di più, riceve di più.</p>
+        <div class="pop d2" style="align-self: flex-start; background: #FFC93C; border-radius: 20px; padding: 14px 22px; display: flex; flex-direction: column">
+          <span style="font-size: 14px; font-weight: 700">Premio di produzione da dividere</span>
+          <span style="font-size: 40px; font-weight: 900">S = 4.860 €</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{intro}}" as="p" hint-placeholder-count="3">
+            <div class="rise" style="{{p.row}}">
+              <span style="font-weight: 800; font-size: 17px">{{p.name}}</span>
+              <div style="height: 40px; background: #F4F2FF; border-radius: 12px; overflow: hidden"><div class="growX" style="{{p.bar}}">{{p.days}} giorni</div></div>
+            </div>
+          </sc-for>
+        </div>
+        <p class="rise d6" style="margin: 0; font-size: 17px; font-weight: 700">Il premio va diviso in proporzione ai giorni di presenza. Chi riceverà di più? E quanto?</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Il procedimento, passo dopo passo</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; color: #4B4670">x, y, z sono le quote da trovare · a, b, c sono le grandezze di riferimento · S è l'importo da dividere.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{proc}}" as="p" hint-placeholder-count="5">
+            <div class="drop" style="{{p.style}}">
+              <span style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; background: #1B1640; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 900">{{p.n}}</span>
+              <div style="display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: clamp(18px, 2.8vw, 26px); font-weight: 900">{{p.f}}</span>
+                <span style="font-size: 15px; color: #4B4670">{{p.t}}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <button type="button" class="btn" style="background: #6FDCA6; color: #1B1640" onClick="{{moreSub}}" disabled="{{subDone}}">Mostra il passo successivo</button>
+          <button type="button" class="btn" style="background: #F4F2FF; color: #1B1640" onClick="{{resetSub}}">Ricomincia</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Il coefficiente di riparto</h2>
+        <div class="pop d1" style="background: #1B1640; color: #FFFFFF; border-radius: 22px; padding: 18px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px">
+          <span style="font-size: clamp(20px, 3vw, 28px); font-weight: 900">coefficiente = S ÷ (a + b + c)</span>
+          <span style="font-size: clamp(20px, 3vw, 28px); font-weight: 900; color: #FFC93C">4.860 ÷ (245 + 260 + 215) = 4.860 ÷ 720 = 6,75</span>
+        </div>
+        <p class="rise d2" style="margin: 0; font-size: 17px; color: #4B4670">Ogni giorno di presenza “vale” 6,75 €. Ora moltiplica il coefficiente per i giorni di ognuno:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px">
+          <sc-for list="{{quote}}" as="q" hint-placeholder-count="3">
+            <div class="pop" style="{{q.style}}">
+              <span style="font-weight: 800; font-size: 18px">{{q.name}}</span>
+              <span style="font-size: 16px">6,75 × {{q.days}} =</span>
+              <span style="font-size: 30px; font-weight: 900">{{q.val}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div class="rise d5" style="display: flex; height: 54px; border-radius: 16px; overflow: hidden">
+          <sc-for list="{{quote}}" as="q" hint-placeholder-count="3">
+            <div class="growX" style="{{q.seg}}">{{q.short}}</div>
+          </sc-for>
+        </div>
+        <div class="rise d6" style="background: #DDF7EA; border-radius: 16px; padding: 14px; font-weight: 700; font-size: 16px">Controllo: 1.653,75 + 1.755,00 + 1.451,25 = 4.860,00 € ✓ La somma delle quote deve sempre dare S.</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Laboratorio: riparto semplice</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; line-height: 1.5; color: #4B4670">Un mobilificio divide 5.440 € di costi di vendita in proporzione ai tavoli venduti. Cambia i numeri e guarda come cambiano le quote.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 22px">
+          <div class="rise d2" style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 10px; background: #F4F2FF; border-radius: 22px; padding: 18px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">S · importo da dividere (€)
+              <input class="inp" type="text" inputmode="decimal" value="{{labS}}" onChange="{{setLabS}}">
+            </label>
+            <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; font-weight: 700; font-size: 14px; margin-top: 6px"><span>Chi / che cosa</span><span>Grandezza</span></div>
+            <sc-for list="{{labRows}}" as="r" hint-placeholder-count="3">
+              <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px">
+                <label><span style="position: absolute; left: -9999px">Nome {{r.n}}</span><input class="inp" type="text" value="{{r.name}}" onChange="{{r.setName}}"></label>
+                <label><span style="position: absolute; left: -9999px">Grandezza {{r.n}}</span><input class="inp" type="text" inputmode="decimal" value="{{r.val}}" onChange="{{r.setVal}}"></label>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex: 1.3 1 380px; display: flex; flex-direction: column; gap: 12px">
+            <div class="pop" style="background: #1B1640; color: #FFFFFF; border-radius: 18px; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 15px; color: #D9D5F5">coefficiente = {{labSTxt}} ÷ {{labSum}}</span>
+              <span style="font-size: 28px; font-weight: 900; color: #FFC93C">{{labK}}</span>
+            </div>
+            <div style="display: flex; height: 54px; border-radius: 16px; overflow: hidden; background: #F4F2FF">
+              <sc-for list="{{labOut}}" as="o" hint-placeholder-count="3">
+                <div class="bar" style="{{o.seg}}"></div>
+              </sc-for>
+            </div>
+            <sc-for list="{{labOut}}" as="o" hint-placeholder-count="3">
+              <div style="{{o.row}}">
+                <span style="font-weight: 800">{{o.name}}</span>
+                <span style="font-size: 14px">{{labK}} × {{o.valTxt}}</span>
+                <span style="font-weight: 900; font-size: 20px">{{o.q}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Riparto composto: due grandezze insieme</h2>
+        <p class="rise d1" style="margin: 0; font-size: 16px; line-height: 1.5; color: #4B4670">Un premio di 5.000 € si divide in base alle <strong style="color: #1B1640">ore di presenza</strong> E ai <strong style="color: #1B1640">contratti procurati</strong>. Il trucco: per ognuno <strong style="color: #1B1640">moltiplica</strong> le due grandezze, poi fai un riparto semplice.</p>
+        <div class="pop d2" style="background: #ECE6FF; border-radius: 16px; padding: 14px 18px; font-size: clamp(16px, 2.4vw, 22px); font-weight: 800">x : (a₁ × a₂) = y : (b₁ × b₂) = z : (c₁ × c₂) &nbsp;→&nbsp; coeff. = S ÷ (a₁×a₂ + b₁×b₂ + c₁×c₂)</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 22px">
+          <div class="rise d3" style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 10px; background: #F4F2FF; border-radius: 22px; padding: 18px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">S · premio (€)
+              <input class="inp" type="text" inputmode="decimal" value="{{cS}}" onChange="{{setCS}}">
+            </label>
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 8px; font-weight: 700; font-size: 13px; margin-top: 6px"><span>Nome</span><span>Ore</span><span>Contratti</span><span>Prodotto</span></div>
+            <sc-for list="{{cRows}}" as="r" hint-placeholder-count="3">
+              <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 8px; align-items: center">
+                <span style="font-weight: 800">{{r.name}}</span>
+                <label><span style="position: absolute; left: -9999px">Ore {{r.name}}</span><input class="inp" type="text" inputmode="decimal" value="{{r.a}}" onChange="{{r.setA}}"></label>
+                <label><span style="position: absolute; left: -9999px">Contratti {{r.name}}</span><input class="inp" type="text" inputmode="decimal" value="{{r.b}}" onChange="{{r.setB}}"></label>
+                <span class="pop" style="background: #FFC93C; border-radius: 12px; padding: 10px; text-align: center; font-weight: 900">{{r.prod}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex: 1.2 1 360px; display: flex; flex-direction: column; gap: 12px">
+            <div class="pop" style="background: #1B1640; color: #FFFFFF; border-radius: 18px; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+              <span style="font-size: 15px; color: #D9D5F5">coefficiente = {{cSTxt}} ÷ {{cSum}}</span>
+              <span style="font-size: 28px; font-weight: 900; color: #FFC93C">{{cK}}</span>
+            </div>
+            <div style="display: flex; height: 54px; border-radius: 16px; overflow: hidden; background: #F4F2FF">
+              <sc-for list="{{cOut}}" as="o" hint-placeholder-count="3">
+                <div class="bar" style="{{o.seg}}"></div>
+              </sc-for>
+            </div>
+            <sc-for list="{{cOut}}" as="o" hint-placeholder-count="3">
+              <div style="{{o.row}}">
+                <span style="font-weight: 800">{{o.name}}</span>
+                <span style="font-size: 14px">{{cK}} × {{o.valTxt}}</span>
+                <span style="font-weight: 900; font-size: 20px">{{o.q}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Prova tu!</h2>
+          <span class="pop" style="background: #6FDCA6; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{score}} / {{qTotal}}</span>
+        </div>
+        <sc-for list="{{quiz}}" as="q" hint-placeholder-count="5">
+          <div class="rise" style="background: #F4F2FF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+            <span style="font-weight: 800; font-size: 17px; line-height: 1.4">{{q.n}}. {{q.text}}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{q.answered}}" hint-placeholder-val="{{ false }}">
+              <span class="pop" style="{{q.fbStyle}}">{{q.fb}}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Costi.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 0, sub: 1, ans: {},
+      labS: '5440', lab: [{ name: 'Tavoli rettangolari', val: '300' }, { name: 'Tavoli rotondi', val: '240' }, { name: 'Tavoli ovali', val: '100' }],
+      cS: '5000', cr: [{ name: 'Luca', a: '16', b: '5' }, { name: 'Anna', a: '20', b: '10' }, { name: 'Daniele', a: '10', b: '4' }]
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['L’idea', 'Procedimento', 'Coefficiente', 'Laboratorio', 'Riparto composto', 'Prova tu'];
+    const N = titles.length;
+    const fmt = (n, d) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { maximumFractionDigits: d == null ? 4 : d });
+    const eur = (n) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    const num = (x) => parseFloat(String(x).replace(',', '.'));
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #12A867; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const cols = ['#FFC93C', '#8FB0FF', '#FF8FB4'];
+
+    const people = [['Rossi', 245], ['Marini', 260], ['Zani', 215]];
+    v.intro = people.map((p, i) => ({
+      name: p[0], days: p[1],
+      row: 'display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; animation-delay: ' + (0.3 + i * 0.15) + 's',
+      bar: 'height: 100%; display: flex; align-items: center; padding-left: 12px; box-sizing: border-box; font-weight: 800; border-radius: 12px; background: ' + cols[i] + '; width: ' + (p[1] / 260 * 100) + '%; animation-delay: ' + (0.4 + i * 0.15) + 's'
+    }));
+
+    const P = [
+      { f: 'x : a = y : b = z : c', t: 'Scrivo la catena dei rapporti: ogni quota sta alla sua grandezza.' },
+      { f: '(x + y + z) : (a + b + c) = x : a', t: 'Applico la proprietà del COMPORRE: sommo i termini.' },
+      { f: 'S : (a + b + c) = x : a', t: 'x + y + z è proprio S, l’importo da dividere.' },
+      { f: 'coefficiente = S ÷ (a + b + c)', t: 'Calcolo una volta sola la parte comune a tutte le formule.' },
+      { f: 'x = coeff × a · y = coeff × b · z = coeff × c', t: 'Moltiplico il coefficiente per ogni grandezza. Fatto!' }
+    ];
+    v.proc = P.slice(0, s.sub).map((p, i) => Object.assign({ n: i + 1, style: 'display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 18px; background: ' + (i === s.sub - 1 ? '#DDF7EA' : '#F4F2FF') }, p));
+    v.moreSub = () => this.setState({ sub: Math.min(P.length, s.sub + 1) });
+    v.resetSub = () => this.setState({ sub: 1 });
+    v.subDone = s.sub >= P.length;
+
+    v.quote = people.map((p, i) => {
+      const q = 6.75 * p[1];
+      return {
+        name: p[0], days: p[1], val: eur(q), short: p[0] + ' ' + eur(q),
+        style: 'display: flex; flex-direction: column; gap: 4px; padding: 16px; border-radius: 20px; background: ' + cols[i] + '; animation-delay: ' + (0.3 + i * 0.2) + 's',
+        seg: 'flex: ' + q + ' 1 0; background: ' + cols[i] + '; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; white-space: nowrap; overflow: hidden; border-right: 3px solid #FFFFFF; animation-delay: ' + (0.6 + i * 0.2) + 's'
+      };
+    });
+
+    const share = (S, vals, names) => {
+      const sum = vals.reduce((a, b) => a + (isFinite(b) ? b : 0), 0);
+      const k = S / sum;
+      return {
+        sum, k,
+        out: vals.map((val, i) => {
+          const q = k * val;
+          return {
+            name: names[i], valTxt: fmt(val), q: eur(q),
+            seg: 'height: 100%; background: ' + cols[i] + '; border-right: 3px solid #FFFFFF; width: ' + (sum ? (val / sum * 100) : 0) + '%',
+            row: 'display: grid; grid-template-columns: 1.3fr 1fr auto; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 14px; background: ' + cols[i]
+          };
+        })
+      };
+    };
+    const labS = num(s.labS);
+    const lv = s.lab.map((r) => num(r.val));
+    const L = share(labS, lv, s.lab.map((r) => r.name));
+    v.labS = s.labS; v.labSTxt = fmt(labS); v.labSum = fmt(L.sum); v.labK = fmt(L.k); v.labOut = L.out;
+    v.setLabS = (e) => this.setState({ labS: e.target.value });
+    v.labRows = s.lab.map((r, i) => ({
+      n: i + 1, name: r.name, val: r.val,
+      setName: (e) => { const nl = s.lab.slice(); nl[i] = Object.assign({}, nl[i], { name: e.target.value }); this.setState({ lab: nl }); },
+      setVal: (e) => { const nl = s.lab.slice(); nl[i] = Object.assign({}, nl[i], { val: e.target.value }); this.setState({ lab: nl }); }
+    }));
+
+    const cS = num(s.cS);
+    const prods = s.cr.map((r) => num(r.a) * num(r.b));
+    const C = share(cS, prods, s.cr.map((r) => r.name));
+    v.cS = s.cS; v.cSTxt = fmt(cS); v.cSum = fmt(C.sum); v.cK = fmt(C.k); v.cOut = C.out;
+    v.setCS = (e) => this.setState({ cS: e.target.value });
+    v.cRows = s.cr.map((r, i) => ({
+      name: r.name, a: r.a, b: r.b, prod: r.a + ' × ' + r.b + ' = ' + fmt(prods[i]),
+      setA: (e) => { const nl = s.cr.slice(); nl[i] = Object.assign({}, nl[i], { a: e.target.value }); this.setState({ cr: nl }); },
+      setB: (e) => { const nl = s.cr.slice(); nl[i] = Object.assign({}, nl[i], { b: e.target.value }); this.setState({ cr: nl }); }
+    }));
+
+    const Q = [
+      { text: 'Premio di 4.860 € fra Rossi (245 giorni), Marini (260) e Zani (215). Quale proporzione dà la quota di Rossi?', o: ['4.860 : 720 = 245 : x', '4.860 : 720 = x : 245', '720 : 245 = x : 4.860'], c: 1, why: 'S : (a+b+c) = x : a → x = 4.860 × 245 ÷ 720 = 1.653,75 €' },
+      { text: 'Utile di 72.000 € fra due soci con capitali di 120.000 € e 60.000 €. Qual è il coefficiente di riparto?', o: ['180.000 ÷ 72.000 = 2,5', '72.000 ÷ 180.000 = 0,4', '72.000 ÷ 120.000 = 0,6'], c: 1, why: 'Coefficiente = S ÷ somma delle grandezze = 72.000 ÷ 180.000 = 0,4' },
+      { text: 'Per risolvere un riparto proporzionale si applica la proprietà…', o: ['dello scomporre', 'del comporre', 'del permutare'], c: 1, why: 'Si sommano i termini della catena: proprietà del comporre.' },
+      { text: 'Compenso di 4.900 €: Balzarini corso di 10 ore con 8 partecipanti, Maggi 16 ore con 15 partecipanti. Quota di Balzarini?', o: ['4.900 : 320 = 80 : x', '4.900 : 320 = x : 80', '4.900 : 26 = x : 10'], c: 1, why: '10×8 = 80, 16×15 = 240, totale 320 → x = 4.900 × 80 ÷ 320 = 1.225 €' },
+      { text: 'Quando il riparto è composto?', o: ['Quando ogni grandezza è il prodotto di più grandezze', 'Quando ci sono più di tre persone', 'Quando l’importo è molto grande'], c: 0, why: 'Composto = più grandezze di riferimento che si moltiplicano tra loro.' }
+    ];
+    let score = 0;
+    v.quiz = Q.map((q, qi) => {
+      const pick = s.ans[qi];
+      const answered = pick != null;
+      if (pick === q.c) score++;
+      return {
+        n: qi + 1, text: q.text, answered,
+        fb: pick === q.c ? 'Esatto! ' + q.why : 'Non proprio. ' + q.why,
+        fbStyle: 'font-weight: 700; font-size: 15px; padding: 10px 14px; border-radius: 12px; ' + (pick === q.c ? 'background: #DDF7EA; color: #0B6B41' : 'background: #FFE0EB; color: #A3164B'),
+        opts: q.o.map((lab, oi) => {
+          let bg = '#FFFFFF', bd = '#D9D3FA';
+          if (answered && oi === q.c) { bg = '#6FDCA6'; bd = '#0B6B41'; }
+          else if (answered && oi === pick) { bg = '#FF8FB4'; bd = '#A3164B'; }
+          return { label: lab, pick: () => this.setState({ ans: Object.assign({}, s.ans, { [qi]: oi }) }), style: 'border: 3px solid ' + bd + '; background: ' + bg + '; color: #1B1640; border-radius: 14px; padding: 10px 18px; min-height: 44px; font-weight: 800; font-size: 16px; text-align: left' };
+        })
+      };
+    });
+    v.score = score; v.qTotal = Q.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>

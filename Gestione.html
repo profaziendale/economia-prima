@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Operazioni di gestione</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3EFFF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.spin{animation:spin 16s linear infinite}
+.growY{animation:growY .8s cubic-bezier(.2,.8,.2,1) both;transform-origin:bottom}
+@keyframes wob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-6px)}}
+.wob{animation:wob 3.4s ease-in-out infinite}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .3s}
+.bar{transition:height .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1)}
+input[type=range]{width:100%;accent-color:#5B3FD9;height:28px}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #B9A6FF; border-radius: 10px; padding: 4px 10px">11</span>Operazioni di gestione</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #E2DAFB; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #E2DAFB">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Che cos'è la gestione?</h2>
+        <div class="pop d1" style="background: #B9A6FF; border-radius: 22px; padding: 20px 24px; font-size: clamp(18px, 2.6vw, 24px); font-weight: 800; line-height: 1.4">La <span style="background: #FFFFFF; padding: 0 8px; border-radius: 8px">gestione</span> è l'insieme delle operazioni che l'azienda compie, giorno dopo giorno, per raggiungere il suo scopo.</div>
+        <p class="rise d2" style="margin: 0; font-size: 17px; line-height: 1.5; color: #4B4670; max-width: 820px">Le operazioni si ripetono continuamente, come in un <strong style="color: #1B1640">ciclo</strong>: l'azienda raccoglie denaro, lo usa per comprare ciò che serve, produce, vende… e con il denaro incassato ricomincia.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px">
+          <sc-for list="{{ops}}" as="o" hint-placeholder-count="4">
+            <div class="pop" style="{{o.card}}">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start">
+                <img data-dc-src="{{o.img}}" alt="" class="wob" style="width: 80px; height: 80px">
+                <span style="font-size: 34px; font-weight: 900; line-height: 1; opacity: .35">{{o.n}}</span>
+              </div>
+              <span style="font-size: 20px; font-weight: 900">{{o.name}}</span>
+              <span style="font-size: 14px; font-weight: 600; line-height: 1.4">{{o.short}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Il ciclo della gestione</h2>
+          <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{toggleAuto}}">{{autoLabel}}</button>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center">
+          <div class="pop d1" style="flex: 0 0 auto; position: relative; width: 320px; height: 320px; max-width: 100%">
+            <div class="spin" style="position: absolute; inset: 40px; border-radius: 50%; border: 10px dashed #E2DAFB"></div>
+            <span style="position: absolute; inset: 110px; border-radius: 50%; background: #1B1640; color: #FFFFFF; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 900; font-size: 14px">€ denaro</span>
+            <sc-for list="{{nodes}}" as="n" hint-placeholder-count="4">
+              <button type="button" class="chip" style="{{n.style}}" onClick="{{n.pick}}">{{n.name}}</button>
+            </sc-for>
+          </div>
+          <div class="pop" style="{{phaseBox}}">
+            <img data-dc-src="{{phaseImg}}" alt="" class="wob" style="width: 100px; height: 100px">
+            <span style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em">Operazione {{phaseN}} di 4</span>
+            <span style="font-size: 28px; font-weight: 900">{{phaseName}}</span>
+            <span style="font-size: 17px; line-height: 1.5">{{phaseText}}</span>
+            <span style="font-size: 15px; font-weight: 700; background: rgba(255,255,255,.65); padding: 10px 12px; border-radius: 12px">{{phaseEx}}</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/6e5d2e58cb7af0060402941020195d48.svg" alt="Un cono gelato" class="wob" style="width: 90px; height: 90px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Esempio: la gelateria “Polo Nord”</h2>
+        </div>
+        <p class="rise d1" style="margin: 0; font-size: 17px; color: #4B4670">Segui il percorso del denaro dentro una gelateria.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{story}}" as="st" hint-placeholder-count="4">
+            <div class="rise" style="{{st.row}}">
+              <span style="{{st.tag}}">{{st.op}}</span>
+              <span style="font-size: 16px; line-height: 1.5; flex: 1 1 300px">{{st.text}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div class="rise d6" style="background: #FFF4CF; border-radius: 16px; padding: 14px; font-size: 16px; line-height: 1.5">Con l'incasso dei gelati, la gelateria <strong>restituisce il prestito</strong>, paga i dipendenti e <strong>ricompra il latte</strong>: il ciclo ricomincia!</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Investimento: che fattori compra?</h2>
+          <span class="pop" style="background: #B9A6FF; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{fScore}} / {{fTotal}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+          <div class="pop d1" style="background: #8FB0FF; border-radius: 18px; padding: 16px"><strong style="font-size: 18px">Beni durevoli</strong><div style="font-size: 15px; margin-top: 6px">si usano tante volte, per anni: fabbricati, macchinari, automezzi, arredi, computer</div></div>
+          <div class="pop d2" style="background: #FFC93C; border-radius: 18px; padding: 16px"><strong style="font-size: 18px">Beni di breve durata</strong><div style="font-size: 15px; margin-top: 6px">si consumano o si vendono subito: materie prime, merci, materiali di consumo</div></div>
+        </div>
+        <sc-for list="{{fact}}" as="g" hint-placeholder-count="8">
+          <div class="rise" style="{{g.box}}">
+            <span style="font-weight: 800; font-size: 16px; flex: 1 1 220px">{{g.text}}</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="2">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+          <img src="img/6e5d2e58cb7af0060402941020195d48.svg" alt="Un cono gelato" class="wob" style="width: 80px; height: 80px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900; flex: 1 1 300px">Il risultato della gestione: ricavi − costi</h2>
+        </div>
+        <p class="rise d1" style="margin: 0; font-size: 16px; line-height: 1.5; color: #4B4670">A luglio la gelateria vende i coni a <strong style="color: #1B1640">2,50 €</strong>. Per ogni cono spende 0,60 € di ingredienti. Costi fissi del mese: stipendi 4.000 €, affitto 1.200 €, energia 800 €.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end">
+          <div style="flex: 0 0 auto; display: flex; gap: 18px; align-items: flex-end; height: 300px; border-bottom: 4px solid #1B1640; padding: 0 10px">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><strong style="font-size: 14px">{{ricTxt}}</strong><div class="bar growY" style="{{ricBar}}"></div><span style="font-weight: 700; font-size: 14px">Ricavi</span></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><strong style="font-size: 14px">{{cosTxt}}</strong><div class="bar growY d1" style="{{cosBar}}"></div><span style="font-weight: 700; font-size: 14px">Costi</span></div>
+          </div>
+          <div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Coni venduti nel mese: {{coniTxt}}
+              <input type="range" min="0" max="8000" step="100" value="{{coni}}" onChange="{{setConi}}">
+            </label>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; background: #F4F2FF; border-radius: 16px; padding: 14px 16px; font-size: 15px">
+              <span>Ricavi: {{coniTxt}} × 2,50 €</span><strong>{{ricTxt}}</strong>
+              <span>Ingredienti: {{coniTxt}} × 0,60 €</span><strong>{{ingTxt}}</strong>
+              <span>Costi fissi</span><strong>6.000,00 €</strong>
+            </div>
+            <div class="pop" style="{{resStyle}}">
+              <span style="font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em">{{resLabel}}</span>
+              <span style="font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">{{resTxt}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Prova tu: che operazione è?</h2>
+          <span class="pop" style="background: #B9A6FF; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{qScore}} / {{qTotal}}</span>
+        </div>
+        <sc-for list="{{opq}}" as="g" hint-placeholder-count="8">
+          <div class="rise" style="{{g.box}}">
+            <span style="font-weight: 800; font-size: 16px; flex: 1 1 240px">{{g.text}}</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="4">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="Allenamento.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Vai alla Palestra →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, phase: 0, auto: true, f: {}, q: {}, coni: 3200 };
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      if (this.state.auto && this.state.step === 1) this.setState({ phase: (this.state.phase + 1) % 4 });
+    }, 2600);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const s = this.state;
+    const titles = ['La gestione', 'Il ciclo', 'Esempio', 'Investimento', 'Ricavi e costi', 'Prova tu'];
+    const N = titles.length;
+    const eur = (n) => n.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #5B3FD9; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+    const optStyle = (state) => 'border: 3px solid ' + (state === 'ok' ? '#0B6B41' : state === 'ko' ? '#A3164B' : '#1B1640') + '; background: ' + (state === 'ok' ? '#6FDCA6' : state === 'ko' ? '#FF8FB4' : '#FFFFFF') + '; color: #1B1640; border-radius: 12px; padding: 8px 14px; min-height: 44px; font-weight: 800; font-size: 14px';
+
+    const OPS = [
+      ['Finanziamento', '#FFC93C', 'Raccolgo il denaro', 'L’azienda si procura il denaro che le serve: dal titolare (capitale proprio) o da altri, come una banca (capitale di terzi, cioè prestiti).', 'Es.: il titolare versa 20.000 € e la banca presta 10.000 €.'],
+      ['Investimento', '#8FB0FF', 'Compro i fattori produttivi', 'Il denaro viene usato per acquistare i fattori produttivi: beni durevoli, materie prime e merci, lavoro, servizi.', 'Es.: si comprano un macchinario, le materie prime, si pagano i dipendenti.'],
+      ['Produzione', '#6FDCA6', 'Trasformo', 'I fattori produttivi vengono combinati e trasformati per ottenere prodotti o servizi da vendere.', 'Es.: latte, zucchero e frutta diventano gelato.'],
+      ['Vendita', '#FF8FB4', 'Incasso i ricavi', 'I prodotti vengono venduti: l’azienda incassa denaro (i ricavi), che torna disponibile per nuovi investimenti.', 'Es.: si vendono i gelati e si incassano i soldi.']
+    ];
+    const OPI = ['438284234d3fa2c0989e2a88311a8d38', '5a8ac55f84f094a1f6d2d387c422ecd0', 'cfecd3f971f0538319b9d0d02c439c03', '07aac2e04e67d467a6a7b0be16a66712'];
+    v.ops = OPS.map((o, i) => ({ img: '/_blob/' + OPI[i], n: '0' + (i + 1), name: o[0], short: o[2], card: 'display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 22px; background: ' + o[1] + '; animation-delay: ' + (0.3 + i * 0.15) + 's' }));
+
+    const pos = [['left: 50%', 'top: 0', 'translate(-50%, 0)'], ['right: 0', 'top: 50%', 'translate(0, -50%)'], ['left: 50%', 'bottom: 0', 'translate(-50%, 0)'], ['left: 0', 'top: 50%', 'translate(0, -50%)']];
+    v.nodes = OPS.map((o, i) => {
+      const on = s.phase === i;
+      return { name: o[0], pick: () => this.setState({ phase: i, auto: false }),
+        style: 'position: absolute; ' + pos[i][0] + '; ' + pos[i][1] + '; transform: ' + pos[i][2] + (on ? ' scale(1.12)' : '') + '; border: 4px solid ' + (on ? '#1B1640' : '#FFFFFF') + '; border-radius: 18px; padding: 12px 14px; min-height: 48px; font-weight: 900; font-size: 15px; color: #1B1640; background: ' + (on ? o[1] : '#F4F2FF') };
+    });
+    const ph = OPS[s.phase];
+    v.phaseImg = '/_blob/' + OPI[s.phase];
+    v.phaseN = s.phase + 1; v.phaseName = ph[0]; v.phaseText = ph[3]; v.phaseEx = ph[4];
+    v.phaseBox = 'flex: 1 1 320px; display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 22px; background: ' + ph[1];
+    v.toggleAuto = () => this.setState({ auto: !s.auto });
+    v.autoLabel = s.auto ? 'Pausa animazione' : 'Avvia animazione';
+
+    const ST = [
+      [0, 'Marta apre la gelateria: mette 15.000 € dei suoi risparmi e chiede un prestito di 10.000 € alla banca.'],
+      [1, 'Compra la vetrina frigorifera e la macchina per il gelato, il latte, lo zucchero e la frutta; assume due ragazzi.'],
+      [2, 'In laboratorio, con le macchine e il lavoro dei dipendenti, latte e frutta diventano gelato.'],
+      [3, 'Vende coni e coppette ai clienti e incassa il denaro.']
+    ];
+    v.story = ST.map((x, i) => ({ op: OPS[x[0]][0], text: x[1],
+      row: 'display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: #F4F2FF; animation-delay: ' + (0.2 + i * 0.2) + 's',
+      tag: 'flex: 0 0 auto; min-width: 150px; text-align: center; padding: 10px 14px; border-radius: 12px; font-weight: 900; background: ' + OPS[x[0]][1] }));
+
+    const FA = [['La vetrina frigorifera', 0], ['Il latte', 1], ['Il furgone per le consegne', 0], ['Le cialde per i coni', 1], ['La macchina mantecatrice', 0], ['Lo zucchero', 1], ['Il registratore di cassa', 0], ['Le fragole', 1]];
+    const FL = ['Durevole', 'Breve durata'];
+    let fScore = 0;
+    v.fact = FA.map((g, i) => {
+      const pick = s.f[i];
+      if (pick === g[1]) fScore++;
+      return { text: g[0],
+        box: 'display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px; background: ' + (pick == null ? '#F4F2FF' : pick === g[1] ? '#DDF7EA' : '#FFE0EB') + '; animation-delay: ' + (i * 0.05) + 's',
+        opts: FL.map((lab, oi) => ({ label: lab, pick: () => this.setState({ f: Object.assign({}, s.f, { [i]: oi }) }), style: optStyle(pick == null ? '' : oi === g[1] ? 'ok' : oi === pick ? 'ko' : '') })) };
+    });
+    v.fScore = fScore; v.fTotal = FA.length;
+
+    const ric = s.coni * 2.5, ing = s.coni * 0.6, cos = ing + 6000, res = ric - cos;
+    v.coni = s.coni; v.coniTxt = s.coni.toLocaleString('it-IT');
+    v.setConi = (e) => this.setState({ coni: +e.target.value });
+    v.ricTxt = eur(ric); v.ingTxt = eur(ing); v.cosTxt = eur(cos);
+    v.ricBar = 'width: 90px; border-radius: 12px 12px 0 0; background: #8FB0FF; transform-origin: bottom; height: ' + Math.max(4, ric / 20000 * 240) + 'px';
+    v.cosBar = 'width: 90px; border-radius: 12px 12px 0 0; background: #FF8FB4; transform-origin: bottom; height: ' + Math.max(4, cos / 20000 * 240) + 'px';
+    v.resLabel = res > 0 ? 'Utile' : res < 0 ? 'Perdita' : 'Pareggio';
+    v.resTxt = res >= 0 ? eur(ric) + ' − ' + eur(cos) + ' = ' + eur(res) : eur(cos) + ' − ' + eur(ric) + ' = ' + eur(-res);
+    v.resStyle = 'display: flex; flex-direction: column; gap: 4px; padding: 18px 20px; border-radius: 20px; background: ' + (res > 0 ? '#6FDCA6' : res < 0 ? '#FF8FB4' : '#FFF4CF');
+
+    const OQ = [['Un prestito ottenuto dalla banca', 0], ['L’acquisto di un nuovo forno', 1], ['La cucitura delle scarpe in fabbrica', 2], ['La vendita di 200 magliette a un negozio', 3], ['Il titolare versa 30.000 € in azienda', 0], ['Il pagamento degli stipendi ai dipendenti', 1], ['La farina impastata diventa pane', 2], ['L’incasso per un viaggio venduto da un’agenzia', 3]];
+    const OL = OPS.map((o) => o[0]);
+    let qScore = 0;
+    v.opq = OQ.map((g, i) => {
+      const pick = s.q[i];
+      if (pick === g[1]) qScore++;
+      return { text: g[0],
+        box: 'display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 18px; background: ' + (pick == null ? '#F4F2FF' : pick === g[1] ? '#DDF7EA' : '#FFE0EB') + '; animation-delay: ' + (i * 0.05) + 's',
+        opts: OL.map((lab, oi) => ({ label: lab, pick: () => this.setState({ q: Object.assign({}, s.q, { [i]: oi }) }), style: optStyle(pick == null ? '' : oi === g[1] ? 'ok' : oi === pick ? 'ko' : '') })) };
+    });
+    v.qScore = qScore; v.qTotal = OQ.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>

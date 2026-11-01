@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<circle cx="100" cy="100" r="94" fill="#DDF7EA"/>
+<circle cx="104" cy="40" r="16" fill="#FFC93C" stroke="#1B1640" stroke-width="4"/>
+<text x="104" y="47" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#1B1640">€</text>
+<rect x="76" y="140" width="16" height="24" rx="4" fill="#FF8FB4" stroke="#1B1640" stroke-width="4"/>
+<rect x="118" y="140" width="16" height="24" rx="4" fill="#FF8FB4" stroke="#1B1640" stroke-width="4"/>
+<path d="M78 76 l-6 -18 l22 10" fill="#FF8FB4" stroke="#1B1640" stroke-width="4" stroke-linejoin="round"/>
+<ellipse cx="104" cy="112" rx="58" ry="42" fill="#FF8FB4" stroke="#1B1640" stroke-width="5"/>
+<rect x="150" y="98" width="20" height="26" rx="8" fill="#FF8FB4" stroke="#1B1640" stroke-width="5"/>
+<circle cx="158" cy="108" r="2.5" fill="#1B1640"/><circle cx="163" cy="114" r="2.5" fill="#1B1640"/>
+<circle cx="134" cy="98" r="4" fill="#1B1640"/>
+<rect x="92" y="70" width="26" height="6" rx="3" fill="#1B1640"/>
+<path d="M46 108 q-14 -2 -12 -16" fill="none" stroke="#1B1640" stroke-width="4" stroke-linecap="round"/>
+</svg>

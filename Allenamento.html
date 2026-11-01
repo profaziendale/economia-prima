@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Palestra di esercizi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1B1640;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#FFC93C}a:hover{color:#FFFFFF}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.rise{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .45s cubic-bezier(.2,1.5,.4,1) both}
+.shake{animation:shake .45s ease both}
+.bounce{animation:bounce 1.2s ease-in-out infinite}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #FFC93C;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .2s}
+.chip:hover{transform:translateY(-2px)}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span class="pop" style="background: #FFC93C; color: #1B1640; font-weight: 900; font-size: 18px; padding: 10px 16px; border-radius: 14px">Totale: {{totScore}} / {{totQ}}</span>
+  </nav>
+
+  <header class="rise" style="display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
+    <h1 style="margin: 0; font-size: clamp(32px, 5vw, 52px); font-weight: 900; letter-spacing: -.01em">Palestra di esercizi</h1>
+    <p style="margin: 0; font-size: 17px; color: #D9D5F5">Scegli un allenamento, rispondi e leggi la spiegazione. I problemi vengono dalle verifiche di fine unità.</p>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px">
+    <sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+      <button type="button" class="chip" style="{{c.style}}" onClick="{{c.pick}}">
+        <span style="font-weight: 900; font-size: 16px">{{c.name}}</span>
+        <span style="font-size: 13px; font-weight: 700">{{c.score}} / {{c.n}} corrette</span>
+        <span style="height: 6px; background: rgba(27,22,64,.15); border-radius: 999px; overflow: hidden; display: block"><span class="bar" style="{{c.prog}}"></span></span>
+      </button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 36px); min-height: 440px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+
+    <sc-if value="{{inQuiz}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+          <span style="{{catTag}}">{{catName}}</span>
+          <span style="font-weight: 800; color: #4B4670">Esercizio {{qNum}} di {{qOf}}</span>
+        </div>
+        <div style="display: flex; gap: 6px">
+          <sc-for list="{{pips}}" as="p" hint-placeholder-count="5">
+            <span style="{{p.style}}"></span>
+          </sc-for>
+        </div>
+        <div class="rise" style="display: flex; flex-direction: column; gap: 18px">
+          <span style="font-size: clamp(20px, 3vw, 28px); font-weight: 800; line-height: 1.35">{{qText}}</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+            <sc-for list="{{opts}}" as="o" hint-placeholder-count="3">
+              <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}" disabled="{{o.locked}}">
+                <span style="{{o.letterStyle}}">{{o.letter}}</span>
+                <span>{{o.label}}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+          <div class="{{fbClass}}" style="{{fbStyle}}">
+            <span style="font-size: 20px; font-weight: 900">{{fbTitle}}</span>
+            <span style="font-size: 16px; line-height: 1.5">{{why}}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end">
+            <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{nextQ}}">{{nextLabel}}</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+      <div class="pop" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 20px 0">
+        <span class="bounce" style="{{medal}}">{{doneScore}}/{{qOf}}</span>
+        <span style="font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">{{doneTitle}}</span>
+        <span style="font-size: 17px; color: #4B4670; max-width: 520px">{{doneText}}</span>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center">
+          <button type="button" class="btn" style="background: #F4F2FF; color: #1B1640" onClick="{{restart}}">Rifai questo allenamento</button>
+          <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{nextCat}}">Allenamento successivo →</button>
+        </div>
+      </div>
+    </sc-if>
+
+  </main>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 0, idx: {}, ans: {} };
+  }
+  data() {
+    return [
+      { name: 'Misure', col: '#FFC93C', qs: [
+        ['km 30,215 = … dam', ['302,15', '30.215', '3.021,5'], 2, 'Da km a dam scendi di 2 gradini: × 100 → 3.021,5 dam.'],
+        ['l 10,5 = … cl', ['1.050', '1,05', '105'], 0, 'Da l a cl scendi di 2 gradini: × 100 → 1.050 cl.'],
+        ['3.500 kg = … t', ['35', '3,5', '0,35'], 1, '1 t = 1.000 kg → 3.500 ÷ 1.000 = 3,5 t.'],
+        ['45 q = … kg', ['450', '4.500', '0,45'], 1, '1 q = 100 kg → 45 × 100 = 4.500 kg.'],
+        ['120 kg = … q', ['1,20', '12', '0,12'], 0, 'kg → q: dividi per 100 → 1,20 q.']
+      ]},
+      { name: 'Pesi e valori', col: '#6FDCA6', qs: [
+        ['Peso lordo 80 kg, peso netto 78 kg. Quanto pesa la tara?', ['158 kg', '2 kg', '78 kg'], 1, 'Tara = Lordo − Netto = 80 − 78 = 2 kg.'],
+        ['Peso netto 23,50 g, tara 0,50 g. Qual è il peso lordo?', ['23 g', '24 g', '23,55 g'], 1, 'Lordo = Netto + Tara = 23,50 + 0,50 = 24 g.'],
+        ['Costo 9.400 €, ricavo 11.300 €. Qual è il risultato?', ['Utile 1.900 €', 'Perdita 1.900 €', 'Utile 20.700 €'], 0, 'Ricavo > costo → Utile = 11.300 − 9.400 = 1.900 €.'],
+        ['Ricavo 700 €, perdita 150 €. Quanto è il costo?', ['550 €', '850 €', '700 €'], 1, 'Perdita = Costo − Ricavo → Costo = 700 + 150 = 850 €.'],
+        ['Costo 6.000 €, utile 20.000 €. Quanto è il ricavo?', ['14.000 €', '26.000 €', '20.000 €'], 1, 'Ricavo = Costo + Utile = 6.000 + 20.000 = 26.000 €.']
+      ]},
+      { name: 'Proporzioni', col: '#8FB0FF', qs: [
+        ['Per 3 kg di uva si spendono 10,50 €. Quanto per 8 kg?', ['28 €', '2,25 €', '39,38 €'], 0, '3 : 10,50 = 8 : x → x = 10,50 × 8 ÷ 3 = 28 €.'],
+        ['Per 20 porzioni di purè servono 5 litri di latte. Quanti litri per 76 porzioni?', ['19 litri', '304 litri', '15 litri'], 0, '20 : 5 = 76 : x → x = 5 × 76 ÷ 20 = 19 litri.'],
+        ['30 fustini si riempiono con 12 litri. Quanti litri per 80 fustini?', ['200 litri', '32 litri', '30 litri'], 1, '30 : 12 = 80 : x → x = 12 × 80 ÷ 30 = 32 litri.'],
+        ['20 : 5 = 12 : x. Quanto vale x?', ['48', '3', '15'], 1, 'x è un estremo: medio × medio ÷ estremo = 5 × 12 ÷ 20 = 3.']
+      ]},
+      { name: 'Percentuali', col: '#FF8FB4', qs: [
+        ['Calcola il 18% di 600.', ['108', '33,33', '3.333'], 0, '100 : 18 = 600 : x → x = 18 × 600 ÷ 100 = 108.'],
+        ['440 è la percentuale calcolata su 8.800. Qual è l’aliquota?', ['20%', '5%', '0,05%'], 1, '100 : x = 8.800 : 440 → x = 100 × 440 ÷ 8.800 = 5%.'],
+        ['Il 7% di un numero è 3.150. Qual è il numero?', ['220,50', '45.000', '22.050'], 1, '100 : 7 = x : 3.150 → x = 100 × 3.150 ÷ 7 = 45.000.'],
+        ['Un cappotto da 350 € ha lo sconto del 25%. Quanto è lo sconto?', ['87,50 €', '262,50 €', '25 €'], 0, 'x = 25 × 350 ÷ 100 = 87,50 €.'],
+        ['1.620 è la percentuale calcolata su 9.000. Qual è l’aliquota?', ['18%', '5,5%', '1,8%'], 0, 'x = 100 × 1.620 ÷ 9.000 = 18%.'],
+        ['Il 42% di un numero è 1.260. Qual è il numero?', ['529,20', '3.000', '30.000'], 1, 'x = 100 × 1.260 ÷ 42 = 3.000.']
+      ]},
+      { name: 'Sopra e sotto', col: '#B9A6FF', qs: [
+        ['Uno stipendio di 1.500 € aumenta del 5%. Nuovo stipendio?', ['1.575 €', '1.425 €', '1.505 €'], 0, 'Sopracento diretto: 100 : 105 = 1.500 : x → x = 1.575 €.'],
+        ['2 q di patate in contenitori che pesano il 3% delle patate. Peso lordo?', ['1,94 q', '2,06 q', '2,03 q'], 1, 'Tara sul netto → 100 : 103 = 2 : x → x = 2,06 q.'],
+        ['Un divano costa 832 € compreso il 4% di consegna. Prezzo senza consegna?', ['798,72 €', '800 €', '865,28 €'], 1, 'Sopracento inverso: 100 : 104 = x : 832 → x = 100 × 832 ÷ 104 = 800 €.'],
+        ['Dopo un aumento del 5% i dipendenti sono 294. Quanti erano prima?', ['280', '279', '308'], 0, '100 : 105 = x : 294 → x = 100 × 294 ÷ 105 = 280.'],
+        ['Un tapis roulant da 640 € è scontato del 20%. Prezzo scontato?', ['768 €', '512 €', '620 €'], 1, 'Sottocento diretto: 100 : 80 = 640 : x → x = 80 × 640 ÷ 100 = 512 €.'],
+        ['A febbraio gli incassi sono 72.000 €, il 10% in meno di gennaio. Incassi di gennaio?', ['79.200 €', '80.000 €', '64.800 €'], 1, 'Sottocento inverso: 100 : 90 = x : 72.000 → x = 80.000 €.']
+      ]},
+      { name: 'Riparti', col: '#FFB27A', qs: [
+        ['5.440 € di costi divisi fra 300, 240 e 100 tavoli venduti. Quota dei 300 tavoli rettangolari?', ['2.550 €', '1.813,33 €', '2.040 €'], 0, 'coeff. = 5.440 ÷ 640 = 8,5 → 8,5 × 300 = 2.550 €.'],
+        ['Premio 4.860 € fra 245, 260 e 215 giorni di presenza. Quota di chi ha 245 giorni?', ['1.620 €', '1.653,75 €', '1.755 €'], 1, 'coeff. = 4.860 ÷ 720 = 6,75 → 6,75 × 245 = 1.653,75 €.'],
+        ['Premio 5.000 € per ore × contratti: Luca 16×5, Anna 20×10, Daniele 10×4. Quota di Anna?', ['1.666,67 €', '3.125 €', '2.000 €'], 1, 'Prodotti: 80, 200, 40 → totale 320. coeff. = 5.000 ÷ 320 = 15,625 → 15,625 × 200 = 3.125 €.'],
+        ['Utile 72.000 € fra soci con capitali 120.000 € e 60.000 €. Quota del primo socio?', ['48.000 €', '36.000 €', '24.000 €'], 0, 'coeff. = 72.000 ÷ 180.000 = 0,4 → 0,4 × 120.000 = 48.000 €.']
+      ]},
+      { name: 'Tara e utile %', col: '#4FD1C5', qs: [
+        ['Zucchero: 5.150 kg lordi, tara 3% del peso netto. Peso netto?', ['5.000 kg', '4.995,50 kg', '5.304,50 kg'], 0, 'Il netto vale 100, il lordo 103 → 100 : 103 = x : 5.150 → 5.000 kg.'],
+        ['Farina: 2.850 kg netti, tara 5% del peso lordo. Peso lordo?', ['2.992,50 kg', '3.000 kg', '2.707,50 kg'], 1, 'Il lordo vale 100, il netto 95 → 100 : 95 = x : 2.850 → 3.000 kg.'],
+        ['Patate: 12 t lorde, tara 4% del peso lordo. Peso netto in kg?', ['11.520 kg', '11.538,46 kg', '12.480 kg'], 0, '12 t = 12.000 kg · 100 : 96 = 12.000 : x → 11.520 kg.'],
+        ['Una tara del 2% del netto, a quale percentuale del lordo corrisponde?', ['2,04%', '1,96%', '2%'], 1, 'Il lordo vale 102 → 2 ÷ 102 × 100 = 1,96%.'],
+        ['Costo 6.695 €, utile del 25% del costo. Ricavo?', ['8.368,75 €', '8.926,67 €', '5.021,25 €'], 0, 'Il costo vale 100, il ricavo 125 → 100 : 125 = 6.695 : x → 8.368,75 €.'],
+        ['Costo 8.865 €, utile del 20% del ricavo. Ricavo?', ['10.638 €', '11.081,25 €', '7.092 €'], 1, 'Il ricavo vale 100, il costo 80 → 100 : 80 = x : 8.865 → 11.081,25 €.']
+      ]},
+      { name: 'Costi e prezzi', col: '#FFB547', qs: [
+        ['30.000 kg netti di grano a 250 € per tonnellata netta. Costo d’acquisto?', ['7.500 €', '7.500.000 €', '750 €'], 0, '30.000 kg = 30 t → 30 × 250 = 7.500 €.'],
+        ['25.000 kg lordi di mais a 220 € per tonnellata lorda. Costo d’acquisto?', ['5.500 €', '5.225 €', '550.000 €'], 0, '25.000 kg = 25 t → 25 × 220 = 5.500 €.'],
+        ['Costo d’acquisto 7.500 €, trasporto 765 €, magazzino 600 €. Costo complessivo?', ['8.265 €', '8.865 €', '8.100 €'], 1, '7.500 + 765 + 600 = 8.865 €.'],
+        ['Costo complessivo 8.865 € per 30.000 kg netti. Costo di 1 kg?', ['0,2955 €', '3,38 €', '0,2865 €'], 0, '8.865 ÷ 30.000 = 0,2955 € al kg.'],
+        ['Costo di 1 kg 2,40 €, utile del 25% del costo. Prezzo di vendita al kg?', ['3,20 €', '3,00 €', '2,65 €'], 1, '100 : 125 = 2,40 : x → x = 3,00 €.'],
+        ['Ricavo 1.224 €, costo complessivo 1.020 €. Utile?', ['204 €', '2.244 €', '1,20 €'], 0, 'Utile = ricavo − costo = 1.224 − 1.020 = 204 €.']
+      ]}
+    ];
+  }
+  renderVals() {
+    const s = this.state;
+    const D = this.data();
+    const letters = ['A', 'B', 'C'];
+    const scoreOf = (ci) => D[ci].qs.reduce((n, q, qi) => n + ((s.ans[ci] || {})[qi] === q[2] ? 1 : 0), 0);
+    const v = {};
+    let tot = 0, totQ = 0;
+    v.cats = D.map((c, ci) => {
+      const sc = scoreOf(ci); tot += sc; totQ += c.qs.length;
+      const answeredN = Object.keys(s.ans[ci] || {}).length;
+      return { name: c.name, score: sc, n: c.qs.length, pick: () => this.setState({ cat: ci }),
+        prog: 'display: block; height: 100%; border-radius: 999px; background: #1B1640; width: ' + (answeredN / c.qs.length * 100) + '%',
+        style: 'border: 0; text-align: left; display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 18px; min-height: 44px; color: #1B1640; background: ' + c.col + '; ' + (s.cat === ci ? 'box-shadow: 0 0 0 4px #FFFFFF; transform: translateY(-3px)' : 'opacity: .85') };
+    });
+    v.totScore = tot; v.totQ = totQ;
+
+    const c = D[s.cat];
+    const idx = s.idx[s.cat] || 0;
+    const done = idx >= c.qs.length;
+    const myAns = s.ans[s.cat] || {};
+    v.inQuiz = !done; v.done = done;
+    v.catName = c.name; v.qOf = c.qs.length;
+    v.catTag = 'background: ' + c.col + '; font-weight: 900; padding: 8px 14px; border-radius: 12px';
+    v.pips = c.qs.map((q, qi) => {
+      const a = myAns[qi];
+      const col = a == null ? (qi === idx ? '#1B1640' : '#E2DDFB') : a === q[2] ? '#12A867' : '#D61F69';
+      return { style: 'flex: 1; height: 8px; border-radius: 999px; background: ' + col };
+    });
+    if (!done) {
+      const q = c.qs[idx];
+      const pick = myAns[idx];
+      const answered = pick != null;
+      const right = pick === q[2];
+      v.qNum = idx + 1; v.qText = q[0]; v.answered = answered; v.why = q[3];
+      v.opts = q[1].map((lab, oi) => {
+        let bg = '#F4F2FF', bd = '#E2DDFB', lb = '#FFFFFF';
+        if (answered && oi === q[2]) { bg = '#6FDCA6'; bd = '#0B6B41'; }
+        else if (answered && oi === pick) { bg = '#FF8FB4'; bd = '#A3164B'; }
+        return { label: lab, letter: letters[oi], locked: answered,
+          pick: () => { const na = Object.assign({}, s.ans); na[s.cat] = Object.assign({}, myAns, { [idx]: oi }); this.setState({ ans: na }); },
+          letterStyle: 'flex: 0 0 auto; width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; background: ' + lb,
+          style: 'display: flex; align-items: center; gap: 12px; text-align: left; border: 3px solid ' + bd + '; background: ' + bg + '; color: #1B1640; border-radius: 18px; padding: 14px 16px; min-height: 64px; font-weight: 800; font-size: 18px; cursor: ' + (answered ? 'default' : 'pointer') };
+      });
+      v.fbClass = right ? 'pop' : 'shake';
+      v.fbTitle = right ? 'Esatto!' : 'Non proprio… ecco come si fa:';
+      v.fbStyle = 'display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 18px; ' + (right ? 'background: #DDF7EA; color: #0B6B41' : 'background: #FFE0EB; color: #A3164B');
+      v.nextLabel = idx === c.qs.length - 1 ? 'Vedi il risultato →' : 'Prossimo esercizio →';
+      v.nextQ = () => this.setState({ idx: Object.assign({}, s.idx, { [s.cat]: idx + 1 }) });
+    }
+    const sc = scoreOf(s.cat);
+    const ratio = sc / c.qs.length;
+    v.doneScore = sc;
+    v.doneTitle = ratio === 1 ? 'Perfetto, tutto giusto!' : ratio >= 0.6 ? 'Bel lavoro!' : 'Allenati ancora un po’';
+    v.doneText = ratio === 1 ? 'Sei pronto per la verifica su questo argomento.' : ratio >= 0.6 ? 'Rileggi le spiegazioni degli esercizi sbagliati e riprova.' : 'Riguarda la lezione animata dalla dashboard e poi rifai l’allenamento.';
+    v.medal = 'display: flex; align-items: center; justify-content: center; width: 140px; height: 140px; border-radius: 50%; font-size: 40px; font-weight: 900; border: 8px solid #1B1640; background: ' + (ratio === 1 ? '#FFC93C' : ratio >= 0.6 ? '#6FDCA6' : '#FF8FB4');
+    v.restart = () => { const na = Object.assign({}, s.ans); na[s.cat] = {}; this.setState({ ans: na, idx: Object.assign({}, s.idx, { [s.cat]: 0 }) }); };
+    v.nextCat = () => this.setState({ cat: (s.cat + 1) % D.length });
+    return v;
+  }
+}
+</script>
+</body>
+</html>

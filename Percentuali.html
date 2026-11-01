@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Calcolo percentuale</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F2FF;font-family:'Montserrat',system-ui,sans-serif;color:#1B1640}
+a{color:#2453E0}a:hover{color:#1B1640}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:scale(1)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) both}
+.growX{animation:growX .9s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.48s}.d5{animation-delay:.6s}.d6{animation-delay:.72s}
+.btn{font-family:inherit;font-weight:800;font-size:16px;border:0;border-radius:14px;padding:12px 22px;min-height:48px;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.35;cursor:default;transform:none}
+.btn:focus-visible,.chip:focus-visible{outline:3px solid #1B1640;outline-offset:2px}
+.chip{font-family:inherit;cursor:pointer;transition:all .25s}
+.inp{font-family:inherit;font-size:22px;font-weight:800;padding:10px 14px;border:3px solid #D9D3FA;border-radius:14px;width:100%;box-sizing:border-box;color:#1B1640;background:#FFFFFF}
+.inp:focus{outline:none;border-color:#1B1640}
+.bar{transition:width .5s cubic-bezier(.2,.8,.2,1),background .3s}
+.sq{transition:background .25s, transform .25s}
+input[type=range]{width:100%;accent-color:#D61F69;height:28px}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+
+  <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <a href="Main.dc.html" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #1B1640; font-weight: 800; padding: 12px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box">← Dashboard</a>
+    <span style="font-weight: 800; font-size: 18px; display: flex; align-items: center; gap: 10px"><span style="background: #FF8FB4; border-radius: 10px; padding: 4px 10px">03</span>Calcolo percentuale</span>
+    <span style="font-weight: 700; color: #4B4670">Schermata {{stepNum}} di {{total}}</span>
+  </nav>
+  <div style="height: 10px; background: #E2DDFB; border-radius: 999px; overflow: hidden"><div class="bar" style="{{progressStyle}}"></div></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="6">
+      <button type="button" class="chip" style="{{d.style}}" onClick="{{d.go}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <main style="background: #FFFFFF; border-radius: 28px; padding: clamp(20px, 4vw, 40px); min-height: 560px; box-sizing: border-box; box-shadow: 0 8px 0 #E2DDFB">
+
+    <sc-if value="{{s0}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: 22px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Che cosa vuol dire “per cento”?</h2>
+        <p class="rise d1" style="margin: 0; font-size: 18px; line-height: 1.5; color: #4B4670; max-width: 760px">La percentuale è il valore di una grandezza <strong style="color: #1B1640">riferita a 100</strong>. Il {{r0}}% significa {{r0}} parti ogni 100.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 28px; align-items: center">
+          <div class="pop d2" style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; width: min(100%, 340px); aspect-ratio: 1 / 1">
+            <sc-for list="{{squares}}" as="q" hint-placeholder-count="100">
+              <span class="sq" style="{{q.style}}"></span>
+            </sc-for>
+          </div>
+          <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 18px">
+            <span class="pop" style="font-size: clamp(56px, 10vw, 96px); font-weight: 900; line-height: 1; color: #D61F69">{{r0}}%</span>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">Muovi il cursore
+              <input type="range" min="0" max="100" step="1" value="{{r0}}" onChange="{{setR0}}">
+            </label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px">
+              <div style="background: #FFE0EB; border-radius: 14px; padding: 12px; font-weight: 700">{{r0}}% di 100 € = {{of100}} €</div>
+              <div style="background: #FFF4CF; border-radius: 14px; padding: 12px; font-weight: 700">{{r0}}% di 200 € = {{of200}} €</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">La proporzione della percentuale</h2>
+        <div class="pop d1" style="align-self: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(8px, 2vw, 18px); font-size: clamp(40px, 7vw, 72px); font-weight: 900">
+          <span style="background: #EEEAFD; border-radius: 20px; padding: 6px 22px">100</span>
+          <span>:</span>
+          <span class="pop d2" style="background: #FF8FB4; border-radius: 20px; padding: 6px 22px">r</span>
+          <span>=</span>
+          <span class="pop d3" style="background: #8FB0FF; border-radius: 20px; padding: 6px 22px">S</span>
+          <span>:</span>
+          <span class="pop d4" style="background: #FFC93C; border-radius: 20px; padding: 6px 22px">P</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px">
+          <div class="rise d3" style="background: #FFE0EB; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 22px">r</strong><span>aliquota percentuale (o ragione): il numero col simbolo %</span></div>
+          <div class="rise d4" style="background: #E3EAFF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 22px">S</strong><span>somma di riferimento: il totale su cui si calcola</span></div>
+          <div class="rise d5" style="background: #FFF4CF; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px"><strong style="font-size: 22px">P</strong><span>percentuale: il risultato, la “fetta” calcolata</span></div>
+        </div>
+        <div class="rise d6" style="background: #F4F2FF; border-radius: 18px; padding: 16px; font-size: 16px; line-height: 1.5"><strong>Diretto</strong> se cerchi P. <strong>Inverso</strong> se cerchi r oppure S.</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{calcOn}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+          <span class="pop" style="{{tagStyle}}">{{tag}}</span>
+          <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">{{calcTitle}}</h2>
+        </div>
+        <p class="rise d1" style="margin: 0; font-size: 17px; line-height: 1.5; color: #4B4670">{{calcStory}}</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 24px">
+          <div class="rise d2" style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 12px; background: #F4F2FF; border-radius: 22px; padding: 20px">
+            <sc-for list="{{fields}}" as="f" hint-placeholder-count="2">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 700">{{f.label}}
+                <input class="inp" type="text" inputmode="decimal" value="{{f.val}}" onChange="{{f.set}}">
+              </label>
+            </sc-for>
+            <div style="background: #FFFFFF; border-radius: 14px; padding: 12px; font-weight: 700; font-size: 15px">Incognita: <span style="background: #FFC93C; padding: 2px 8px; border-radius: 8px">{{unknown}}</span></div>
+          </div>
+          <div style="flex: 1.4 1 380px; display: flex; flex-direction: column; gap: 14px">
+            <div class="rise d3" style="display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 14px"><span>S = {{Stxt}}</span><span>100%</span></div>
+              <div style="height: 56px; background: #8FB0FF; border-radius: 16px; overflow: hidden; position: relative">
+                <div class="bar growX" style="{{pBar}}">P = {{Ptxt}}</div>
+              </div>
+              <div style="font-weight: 700; font-size: 14px">r = {{rtxt}}%</div>
+            </div>
+            <div class="pop d4" style="background: #1B1640; color: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: clamp(20px, 3vw, 28px); font-weight: 900">{{prop}}</span>
+              <span style="font-size: 15px; color: #D9D5F5">{{formula}}</span>
+              <span style="font-size: clamp(22px, 3.4vw, 32px); font-weight: 900; color: #FFC93C">{{result}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{s5}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+          <h2 class="rise" style="margin: 0; font-size: clamp(26px, 4vw, 38px); font-weight: 900">Prova tu: quale proporzione?</h2>
+          <span class="pop" style="background: #FF8FB4; font-weight: 900; font-size: 20px; padding: 8px 16px; border-radius: 14px">Punti: {{score}} / {{qTotal}}</span>
+        </div>
+        <sc-for list="{{quiz}}" as="q" hint-placeholder-count="5">
+          <div class="rise" style="background: #F4F2FF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+            <span style="font-weight: 800; font-size: 17px; line-height: 1.4">{{q.n}}. {{q.text}}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <sc-for list="{{q.opts}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="chip" style="{{o.style}}" onClick="{{o.pick}}">{{o.label}}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{q.answered}}" hint-placeholder-val="{{ false }}">
+              <span class="pop" style="{{q.fbStyle}}">{{q.fb}}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <div style="display: flex; justify-content: space-between; gap: 12px">
+    <button type="button" class="btn" style="background: #FFFFFF; color: #1B1640" onClick="{{prev}}" disabled="{{atStart}}">← Indietro</button>
+    <sc-if value="{{atEnd}}" hint-placeholder-val="{{ false }}">
+      <a href="SopraSotto.dc.html" class="btn" style="text-decoration: none; display: inline-flex; align-items: center; background: #1B1640; color: #FFFFFF">Lezione successiva →</a>
+    </sc-if>
+    <sc-if value="{{notEnd}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" style="background: #1B1640; color: #FFFFFF" onClick="{{next}}">Avanti →</button>
+    </sc-if>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, r0: 25, d: { S: '45', r: '30' }, ir: { P: '12', S: '80' }, is: { P: '21', r: '30' }, ans: {} };
+  }
+  renderVals() {
+    const s = this.state;
+    const titles = ['Per cento', 'La proporzione', 'Diretto: P', 'Inverso: r', 'Inverso: S', 'Prova tu'];
+    const N = titles.length;
+    const fmt = (n, d) => (isFinite(n) ? n : 0).toLocaleString('it-IT', { maximumFractionDigits: d == null ? 2 : d });
+    const num = (x) => parseFloat(String(x).replace(',', '.'));
+    const go = (i) => () => this.setState({ step: Math.max(0, Math.min(N - 1, i)) });
+    const v = { stepNum: s.step + 1, total: N, atStart: s.step === 0, atEnd: s.step === N - 1, notEnd: s.step !== N - 1, prev: go(s.step - 1), next: go(s.step + 1) };
+    titles.forEach((t, i) => { v['s' + i] = s.step === i; });
+    v.progressStyle = 'height: 100%; border-radius: 999px; background: #D61F69; width: ' + ((s.step + 1) / N * 100) + '%';
+    v.dots = titles.map((t, i) => ({ label: (i + 1) + ' · ' + t, go: go(i), style: 'border: 0; border-radius: 999px; padding: 10px 14px; min-height: 44px; font-weight: 700; font-size: 14px; ' + (i === s.step ? 'background: #1B1640; color: #FFFFFF' : 'background: #FFFFFF; color: #1B1640') }));
+
+    v.r0 = s.r0;
+    v.setR0 = (e) => this.setState({ r0: +e.target.value });
+    v.squares = Array.from({ length: 100 }, (_, i) => ({ style: 'border-radius: 5px; background: ' + (i < s.r0 ? '#FF4F8B' : '#EEEAFD') + '; transform: ' + (i < s.r0 ? 'scale(1)' : 'scale(.86)') }));
+    v.of100 = fmt(s.r0);
+    v.of200 = fmt(s.r0 * 2);
+
+    v.calcOn = s.step >= 2 && s.step <= 4;
+    const setF = (grp, key) => (e) => this.setState({ [grp]: Object.assign({}, s[grp], { [key]: e.target.value }) });
+    let S, r, P;
+    if (s.step === 2 || s.step < 2 || s.step > 4) {
+      S = num(s.d.S); r = num(s.d.r); P = r * S / 100;
+      v.tag = 'DIRETTO'; v.calcTitle = 'Conosco S e r, cerco P';
+      v.calcStory = 'Esempio: su un prezzo di acquisto di 45 € si applica un utile del 30%. A quanto ammonta l’utile?';
+      v.fields = [{ label: 'S · somma di riferimento', val: s.d.S, set: setF('d', 'S') }, { label: 'r · aliquota %', val: s.d.r, set: setF('d', 'r') }];
+      v.unknown = 'P';
+      v.prop = '100 : ' + fmt(r) + ' = ' + fmt(S) + ' : P';
+      v.formula = 'P = r × S ÷ 100 = ' + fmt(r) + ' × ' + fmt(S) + ' ÷ 100';
+      v.result = 'P = ' + fmt(P);
+    }
+    if (s.step === 3) {
+      P = num(s.ir.P); S = num(s.ir.S); r = 100 * P / S;
+      v.tag = 'INVERSO'; v.calcTitle = 'Conosco P e S, cerco r';
+      v.calcStory = 'Esempio: in un cortile di 80 m², 12 m² sono occupati dalla casetta per la differenziata. Che percentuale del cortile occupa?';
+      v.fields = [{ label: 'P · percentuale (la parte)', val: s.ir.P, set: setF('ir', 'P') }, { label: 'S · somma di riferimento', val: s.ir.S, set: setF('ir', 'S') }];
+      v.unknown = 'r';
+      v.prop = '100 : r = ' + fmt(S) + ' : ' + fmt(P);
+      v.formula = 'r = 100 × P ÷ S = 100 × ' + fmt(P) + ' ÷ ' + fmt(S);
+      v.result = 'r = ' + fmt(r) + '%';
+    }
+    if (s.step === 4) {
+      P = num(s.is.P); r = num(s.is.r); S = 100 * P / r;
+      v.tag = 'INVERSO'; v.calcTitle = 'Conosco P e r, cerco S';
+      v.calcStory = 'Esempio: un paio di scarpe in saldo ha uno sconto di 21 €, pari al 30% del prezzo. Qual era il prezzo prima dello sconto?';
+      v.fields = [{ label: 'P · percentuale (la parte)', val: s.is.P, set: setF('is', 'P') }, { label: 'r · aliquota %', val: s.is.r, set: setF('is', 'r') }];
+      v.unknown = 'S';
+      v.prop = '100 : ' + fmt(r) + ' = S : ' + fmt(P);
+      v.formula = 'S = 100 × P ÷ r = 100 × ' + fmt(P) + ' ÷ ' + fmt(r);
+      v.result = 'S = ' + fmt(S);
+    }
+    v.tagStyle = 'font-weight: 900; font-size: 14px; letter-spacing: .08em; padding: 8px 14px; border-radius: 10px; ' + (v.tag === 'DIRETTO' ? 'background: #6FDCA6' : 'background: #FFC93C');
+    v.Stxt = fmt(S); v.Ptxt = fmt(P); v.rtxt = fmt(r);
+    const w = isFinite(r) ? Math.max(0, Math.min(100, r)) : 0;
+    v.pBar = 'height: 100%; display: flex; align-items: center; padding-left: 12px; box-sizing: border-box; font-weight: 900; white-space: nowrap; background: #FFC93C; border-right: 4px solid #1B1640; width: ' + Math.max(w, 14) + '%';
+
+    const Q = [
+      { text: 'Su un prezzo di acquisto di 45 € si applica un utile del 30%. A quanto ammonta l’utile?', o: ['100 : 30 = x : 45', '30 : 100 = x : 45', '45 : 30 = 100 : x'], c: 1, why: 'È come 100 : 30 = 45 : x → x = 30 × 45 ÷ 100 = 13,50 €' },
+      { text: 'Su un cappotto da 350 € si pratica uno sconto del 25%. A quanto ammonta lo sconto?', o: ['100 : 25 = x : 350', '25 : x = 350 : 100', '25 : 100 = x : 350'], c: 2, why: 'x = 25 × 350 ÷ 100 = 87,50 €' },
+      { text: 'Ad agosto gli ospiti di un hotel sono aumentati di 21, pari al 15% in più di luglio. Quanti erano a luglio?', o: ['100 : 21 = x : 15', '100 : 15 = x : 21', '100 : 15 = 21 : x'], c: 1, why: 'Cerco S → x = 100 × 21 ÷ 15 = 140 ospiti' },
+      { text: 'L’affitto di un negozio di 1.200 € aumenta di 60 €. Di che percentuale è aumentato?', o: ['100 : 1.200 = 60 : x', '100 : x = 1.200 : 60', 'x : 100 = 1.200 : 60'], c: 1, why: 'Cerco r → x = 100 × 60 ÷ 1.200 = 5%' },
+      { text: 'Calcola l’intero sapendo che il suo 20% è 30.', o: ['100 : x = 30 : 20', '100 : 20 = x : 30', '20 : 30 = x : 100'], c: 1, why: 'x = 100 × 30 ÷ 20 = 150' }
+    ];
+    let score = 0;
+    v.quiz = Q.map((q, qi) => {
+      const pick = s.ans[qi];
+      const answered = pick != null;
+      if (pick === q.c) score++;
+      return {
+        n: qi + 1, text: q.text, answered,
+        fb: pick === q.c ? 'Esatto! ' + q.why : 'Non proprio. ' + q.why,
+        fbStyle: 'font-weight: 700; font-size: 15px; padding: 10px 14px; border-radius: 12px; ' + (pick === q.c ? 'background: #DDF7EA; color: #0B6B41' : 'background: #FFE0EB; color: #A3164B'),
+        opts: q.o.map((lab, oi) => {
+          let bg = '#FFFFFF', bd = '#D9D3FA';
+          if (answered && oi === q.c) { bg = '#6FDCA6'; bd = '#0B6B41'; }
+          else if (answered && oi === pick) { bg = '#FF8FB4'; bd = '#A3164B'; }
+          return { label: lab, pick: () => this.setState({ ans: Object.assign({}, s.ans, { [qi]: oi }) }), style: 'border: 3px solid ' + bd + '; background: ' + bg + '; color: #1B1640; border-radius: 14px; padding: 10px 18px; min-height: 44px; font-weight: 800; font-size: 16px' };
+        })
+      };
+    });
+    v.score = score; v.qTotal = Q.length;
+    return v;
+  }
+}
+</script>
+</body>
+</html>
