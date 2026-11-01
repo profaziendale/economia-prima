@@ -2,7 +2,25 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>Bisogni e azienda</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="I bisogni e come si soddisfano, aziende di consumo e di produzione, elementi costitutivi e settori.">
+<meta name="theme-color" content="#1B1640">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Economia aziendale · Classe prima">
+<meta property="og:title" content="Bisogni e azienda · Economia 1AE">
+<meta property="og:description" content="I bisogni e come si soddisfano, aziende di consumo e di produzione, elementi costitutivi e settori.">
+<meta property="og:url" content="https://profaziendale.github.io/economia-prima/Azienda.html">
+<meta property="og:image" content="https://profaziendale.github.io/economia-prima/anteprima.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Economia aziendale classe prima: lezioni animate ed esercizi">
+<meta name="twitter:card" content="summary_large_image">
+<title>Bisogni e azienda · Economia 1AE</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -37,7 +55,7 @@ a{color:#2453E0}a:hover{color:#1B1640}
 .bar{transition:width .5s cubic-bezier(.2,.8,.2,1)}
 </style>
 </helmet>
-<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px">
+<div style="min-height: 100vh; box-sizing: border-box; padding: 20px 16px 40px; overflow-x: clip">
 <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
 
   <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
@@ -172,7 +190,7 @@ a{color:#2453E0}a:hover{color:#1B1640}
         <h2 class="rise" style="margin: 0; font-size: clamp(24px, 3.6vw, 34px); font-weight: 900">Gli elementi costitutivi dell'azienda di produzione</h2>
         <p class="rise d1" style="margin: 0; font-size: 16px; color: #4B4670">Quattro pezzi che si incastrano. Tocca ogni pezzo.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center">
-          <div style="flex: 0 1 380px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; aspect-ratio: 1 / 1; max-width: 380px; width: 100%">
+          <div style="flex: 0 1 380px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; position: relative; aspect-ratio: 1 / 1; max-width: 380px; width: 100%">
             <button type="button" class="chip flyL" style="{{el0}}" onClick="{{pick0}}">PERSONE</button>
             <button type="button" class="chip flyR" style="{{el1}}" onClick="{{pick1}}">BENI</button>
             <button type="button" class="chip flyBL" style="{{el2}}" onClick="{{pick2}}">ORGANIZZAZIONE</button>
@@ -304,7 +322,7 @@ class Component extends DCLogic {
       ['Organizzazione', '#8FB0FF', ['L’azienda dura nel tempo: non fa attività occasionali.', 'Bisogna decidere risorse, tempi di lavoro, compiti delle persone.', 'E i rapporti fra le persone dentro l’azienda.']],
       ['Scopo', '#6FDCA6', ['Creare nuova ricchezza.', 'Profitto per l’imprenditore (compenso per lavoro e capitale).', 'Retribuzione per i collaboratori dipendenti.']]
     ];
-    const elSt = (i, r) => 'border: 0; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(13px, 1.8vw, 17px); color: #1B1640; min-height: 44px; background: ' + EL[i][1] + '; border-radius: ' + r + '; transform: ' + (s.el === i ? 'scale(1.04)' : 'scale(.97)') + '; box-shadow: ' + (s.el === i ? '0 0 0 5px #1B1640' : 'none');
+    const elSt = (i, r) => 'border: 0; min-width: 0; padding: 6px; overflow-wrap: anywhere; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(12px, 1.8vw, 17px); color: #1B1640; min-height: 44px; background: ' + EL[i][1] + '; border-radius: ' + r + '; transform: ' + (s.el === i ? 'scale(1.04)' : 'scale(.97)') + '; box-shadow: ' + (s.el === i ? '0 0 0 5px #1B1640' : 'none');
     v.el0 = elSt(0, '120px 20px 20px 20px'); v.el1 = elSt(1, '20px 120px 20px 20px'); v.el2 = elSt(2, '20px 20px 20px 120px'); v.el3 = elSt(3, '20px 20px 120px 20px');
     v.pick0 = () => this.setState({ el: 0 }); v.pick1 = () => this.setState({ el: 1 }); v.pick2 = () => this.setState({ el: 2 }); v.pick3 = () => this.setState({ el: 3 });
     v.elTitle = EL[s.el][0]; v.elLines = EL[s.el][2];

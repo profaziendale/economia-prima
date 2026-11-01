@@ -1,5 +1,3 @@
-[README.md](https://github.com/user-attachments/files/34236075/README.md)
-
 # Economia aziendale · Classe prima
 
 Lezioni animate ed esercizi interattivi di **Economia aziendale** per il primo anno

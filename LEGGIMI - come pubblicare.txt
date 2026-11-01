@@ -38,7 +38,7 @@ PASSO 4 – Attiva il sito
   2. In "Build and deployment" → Source: "Deploy from a branch".
   3. Branch: "main", cartella "/ (root)" → "Save".
   4. Dopo 1–2 minuti, ricaricando la pagina, compare l'indirizzo:
-        https://NOMEUTENTE.github.io/economia-prima/
+        https://profaziendale.github.io/economia-prima/
      È il link da dare agli studenti (anche come QR code o su Classroom).
 
 PER AGGIORNARE IL SITO IN FUTURO
