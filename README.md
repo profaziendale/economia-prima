@@ -1,11 +1,12 @@
-[README.md](https://github.com/user-attachments/files/34235770/README.md)
+[README.md](https://github.com/user-attachments/files/34236075/README.md)
+
 # Economia aziendale · Classe prima
 
 Lezioni animate ed esercizi interattivi di **Economia aziendale** per il primo anno
 dell'indirizzo economico. Funzionano in qualsiasi browser, da computer, tablet o
 telefono, **senza registrazione e senza installare nulla**.
 
-👉 **Apri il sito:** https://fsartori73-cell.github.io/economia-prima/
+👉 **Apri il sito:** https://profaziendale.github.io/economia-prima/
 
 ---
 
